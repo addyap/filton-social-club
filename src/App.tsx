@@ -86,14 +86,14 @@ function App() {
           className="pointer-events-none absolute -right-20 -bottom-24 h-72 w-72 rounded-full bg-club-gold/10 blur-3xl"
           aria-hidden="true"
         />
-        <div className="relative mx-auto flex max-w-6xl flex-col items-center gap-4 px-4 py-10 text-center sm:py-14">
+        <div className="relative mx-auto flex max-w-6xl flex-col items-start gap-4 px-4 py-10 text-left sm:py-14">
           <Logo className="h-16 w-16 drop-shadow-lg" />
           <h1 className="text-2xl font-bold sm:text-4xl">{club.name}</h1>
           <p className="max-w-2xl font-sans-ui text-sm text-club-cream/90 sm:text-base">
             Bristol&rsquo;s friendly members&rsquo; club — live sport, Saturday night entertainment,
             bingo, skittles and a warm welcome for members and their guests.
           </p>
-          <div className="flex flex-wrap justify-center gap-3 font-sans-ui text-sm font-semibold">
+          <div className="flex flex-wrap justify-start gap-3 font-sans-ui text-sm font-semibold">
             <a
               href="#membership"
               className="rounded-full bg-club-gold px-6 py-3 text-club-green-dark transition hover:brightness-105"
