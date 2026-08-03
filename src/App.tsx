@@ -11,6 +11,23 @@ import {
   skittles,
   bar,
 } from './data/club'
+import functionRoomStage from './assets/img/function-room-stage.jpg'
+import poolTableStage from './assets/img/pool-table-stage.jpg'
+import barTaps from './assets/img/bar-taps.jpg'
+import barWide from './assets/img/bar-wide.jpg'
+import spiritsShelf from './assets/img/spirits-shelf.jpg'
+import fruitMachines from './assets/img/fruit-machines.jpg'
+import smallBarCorner from './assets/img/small-bar-corner.jpg'
+import membershipCard from './assets/img/membership-card.jpg'
+
+const gallery = [
+  { src: functionRoomStage, alt: 'Function room with stage, dance floor and disco lighting' },
+  { src: poolTableStage, alt: 'Pool table with the stage and dance floor behind' },
+  { src: barWide, alt: 'The club bar' },
+  { src: spiritsShelf, alt: 'Spirits shelf behind the bar' },
+  { src: fruitMachines, alt: 'Fruit machines' },
+  { src: smallBarCorner, alt: 'The small bar, with boxing memorabilia on the wall' },
+]
 
 function App() {
   return (
@@ -113,7 +130,9 @@ function App() {
             </p>
           </div>
           <div className="flex flex-col gap-6">
-            <div className="rounded-xl border border-club-green/10 bg-white p-6 shadow-sm">
+            <div className="overflow-hidden rounded-xl border border-club-green/10 bg-white shadow-sm">
+              <img src={barTaps} alt="Real ale, stout, cider and lager taps at the bar" className="h-48 w-full object-cover" />
+              <div className="p-6">
               <h3 className="text-lg font-bold text-club-green">At the bar</h3>
               <p className="mt-2 font-sans-ui text-sm leading-relaxed text-gray-700">{bar.intro}</p>
               <ul className="mt-3 flex flex-wrap gap-2">
@@ -126,6 +145,7 @@ function App() {
                   </li>
                 ))}
               </ul>
+              </div>
             </div>
             <div className="rounded-xl border border-club-green/10 bg-white p-6 shadow-sm">
               <h3 className="text-lg font-bold text-club-green">Skittle players wanted</h3>
@@ -145,27 +165,51 @@ function App() {
       {/* Membership */}
       <section id="membership" className="mx-auto max-w-6xl px-4 py-16">
         <h2 className="text-center text-2xl font-bold text-club-green sm:text-3xl">Membership</h2>
-        <div className="mx-auto mt-8 max-w-2xl rounded-xl border border-club-green/10 bg-white p-8 shadow-sm">
-          <p className="font-sans-ui text-sm leading-relaxed text-gray-700">
-            Filton &amp; District Social Club is a members-only club. To join, you must be 18 years
-            of age or over. Membership applications must be proposed and seconded by existing
-            members, and are subject to committee approval. Subscriptions run for the calendar year
-            and are due on 1st January each year &mdash; current fees are posted on the club
-            noticeboards.
-          </p>
-          <p className="mt-4 font-sans-ui text-sm leading-relaxed text-gray-700">
-            Pop into the club or ask a committee member for an application form, or get in touch via
-            our{' '}
-            <a
-              href={club.facebookUrl}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="font-semibold text-club-green underline"
-            >
-              Facebook group
-            </a>
-            .
-          </p>
+        <div className="mx-auto mt-8 grid max-w-3xl gap-6 sm:grid-cols-[1fr_auto] sm:items-center">
+          <div className="rounded-xl border border-club-green/10 bg-white p-8 shadow-sm">
+            <p className="font-sans-ui text-sm leading-relaxed text-gray-700">
+              Filton &amp; District Social Club is a members-only club. To join, you must be 18 years
+              of age or over. Membership applications must be proposed and seconded by existing
+              members, and are subject to committee approval. Subscriptions run for the calendar year
+              and are due on 1st January each year &mdash; current fees are posted on the club
+              noticeboards.
+            </p>
+            <p className="mt-4 font-sans-ui text-sm leading-relaxed text-gray-700">
+              Pop into the club or ask a committee member for an application form, or get in touch via
+              our{' '}
+              <a
+                href={club.facebookUrl}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="font-semibold text-club-green underline"
+              >
+                Facebook group
+              </a>
+              .
+            </p>
+          </div>
+          <img
+            src={membershipCard}
+            alt="Filton & District Social Club membership card"
+            className="mx-auto h-40 w-auto rounded-lg border border-club-green/10 object-cover shadow-sm sm:h-48"
+          />
+        </div>
+      </section>
+
+      {/* Gallery */}
+      <section id="gallery" className="bg-club-green-dark/5">
+        <div className="mx-auto max-w-6xl px-4 py-16">
+          <h2 className="text-center text-2xl font-bold text-club-green sm:text-3xl">Around the Club</h2>
+          <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3">
+            {gallery.map((photo) => (
+              <img
+                key={photo.src}
+                src={photo.src}
+                alt={photo.alt}
+                className="h-40 w-full rounded-lg object-cover shadow-sm sm:h-48"
+              />
+            ))}
+          </div>
         </div>
       </section>
 
