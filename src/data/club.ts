@@ -146,6 +146,120 @@ export const summerSkittles = {
   cups: ['All In Cup', 'Front First Cup', '4 Corners Cup'],
 }
 
+export type SkittleMatch = { pair: string; time: string }
+
+export type SkittleFixtureWeek = {
+  week: number
+  /** ISO date the week starts. */
+  starting: string
+  note?: string
+  tuesday: SkittleMatch[]
+  wednesday: SkittleMatch[]
+  thursday: SkittleMatch[]
+  friday?: SkittleMatch[]
+}
+
+// Transcribed from the club's printed 2026 fixture sheet. Team numbers only —
+// see the noticeboard's separate team sheet for names.
+export const summerSkittlesFixtures: SkittleFixtureWeek[] = [
+  {
+    week: 1,
+    starting: '2026-06-01',
+    tuesday: [{ pair: '1 v 2', time: '8.00pm' }, { pair: '3 v 4', time: '9.00pm' }],
+    wednesday: [{ pair: '9 v 10', time: '8.30pm' }],
+    thursday: [{ pair: '5 v 6', time: '8.00pm' }, { pair: '7 v 8', time: '9.00pm' }],
+  },
+  {
+    week: 2,
+    starting: '2026-06-08',
+    tuesday: [{ pair: '8 v 6', time: '8.00pm' }, { pair: '10 v 7', time: '9.00pm' }],
+    wednesday: [{ pair: '5 v 9', time: '8.30pm' }],
+    thursday: [{ pair: '3 v 1', time: '8.00pm' }, { pair: '4 v 2', time: '9.00pm' }],
+  },
+  {
+    week: 3,
+    starting: '2026-06-15',
+    note: 'Cup prelims played Monday',
+    tuesday: [{ pair: '1 v 7', time: '8.00pm' }, { pair: '8 v 7', time: '9.00pm' }],
+    wednesday: [{ pair: '9 v 6', time: '8.00pm' }, { pair: '10 v 3', time: '9.00pm' }],
+    thursday: [{ pair: '2 v 4', time: '8.00pm' }, { pair: '5 v 2', time: '9.00pm' }],
+  },
+  {
+    week: 4,
+    starting: '2026-06-22',
+    tuesday: [{ pair: '2 v 6', time: '8.00pm' }, { pair: '3 v 9', time: '9.00pm' }],
+    wednesday: [{ pair: '1 v 4', time: '8.30pm' }],
+    thursday: [{ pair: '5 v 7', time: '8.00pm' }, { pair: '8 v 10', time: '9.00pm' }],
+  },
+  {
+    week: 5,
+    starting: '2026-06-29',
+    tuesday: [{ pair: '5 v 1', time: '8.00pm' }, { pair: '10 v 6', time: '9.00pm' }],
+    wednesday: [{ pair: '3 v 2', time: '8.30pm' }],
+    thursday: [{ pair: '9 v 7', time: '8.00pm' }, { pair: '8 v 4', time: '9.00pm' }],
+  },
+  {
+    week: 6,
+    starting: '2026-07-06',
+    tuesday: [{ pair: '5 v 4', time: '8.00pm' }, { pair: '9 v 8', time: '9.00pm' }],
+    wednesday: [{ pair: '6 v 1', time: '8.30pm' }],
+    thursday: [{ pair: '10 v 3', time: '8.00pm' }, { pair: '7 v 2', time: '9.00pm' }],
+  },
+  {
+    week: 7,
+    starting: '2026-07-13',
+    tuesday: [{ pair: '1 v 7', time: '8.00pm' }, { pair: '3 v 5', time: '9.00pm' }],
+    wednesday: [{ pair: '2 v 8', time: '8.30pm' }],
+    thursday: [{ pair: '6 v 9', time: '8.00pm' }, { pair: '4 v 10', time: '9.00pm' }],
+  },
+  {
+    week: 8,
+    starting: '2026-07-20',
+    note: 'Cup competition games — All In Cup (Tue), Front First Cup (Wed), 4 Corners Cup (Thu)',
+    tuesday: [],
+    wednesday: [],
+    thursday: [],
+  },
+  {
+    week: 9,
+    starting: '2026-07-27',
+    note: 'Cup competition games — All In Cup (Tue), Front First Cup (Wed), 4 Corners Cup (Thu)',
+    tuesday: [],
+    wednesday: [],
+    thursday: [],
+  },
+  {
+    week: 10,
+    starting: '2026-08-03',
+    tuesday: [{ pair: '9 v 2', time: '8.00pm' }, { pair: '10 v 5', time: '9.00pm' }],
+    wednesday: [{ pair: '7 v 4', time: '8.30pm' }],
+    thursday: [{ pair: '8 v 1', time: '8.00pm' }, { pair: '6 v 3', time: '9.00pm' }],
+  },
+  {
+    week: 11,
+    starting: '2026-08-10',
+    tuesday: [{ pair: '7 v 3', time: '8.00pm' }, { pair: '9 v 1', time: '9.00pm' }],
+    wednesday: [{ pair: '2 v 10', time: '8.30pm' }],
+    thursday: [{ pair: '6 v 4', time: '8.00pm' }, { pair: '8 v 5', time: '9.00pm' }],
+  },
+  {
+    week: 12,
+    starting: '2026-08-17',
+    tuesday: [{ pair: '6 v 7', time: '8.00pm' }, { pair: '3 v 8', time: '9.00pm' }],
+    wednesday: [{ pair: '4 v 9', time: '8.30pm' }],
+    thursday: [{ pair: '2 v 5', time: '8.00pm' }, { pair: '1 v 10', time: '9.00pm' }],
+  },
+  {
+    week: 13,
+    starting: '2026-08-24',
+    note: 'Cup semi-finals Tue–Thu · All Cup Finals on Friday',
+    tuesday: [],
+    wednesday: [],
+    thursday: [],
+    friday: [{ pair: 'All Cup Finals', time: '' }],
+  },
+]
+
 export const facilities = [
   'Function room with stage, dance floor and disco lighting for live entertainment',
   'Pool table and darts board',
