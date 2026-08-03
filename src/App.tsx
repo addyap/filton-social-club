@@ -84,7 +84,7 @@ function App() {
 
       {/* Hero */}
       <section
-        className="relative overflow-hidden bg-club-green bg-cover bg-center text-club-cream"
+        className="relative overflow-hidden bg-club-green bg-cover bg-[position:15%_center] text-club-cream"
         style={{ backgroundImage: `url(${functionRoomStageWebp})` }}
       >
         <div className="absolute inset-0 bg-club-green-dark/80" aria-hidden="true" />
