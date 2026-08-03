@@ -3,6 +3,7 @@ import { Footer } from './components/Footer'
 import { Logo } from './components/Logo'
 import { NewsBanner } from './components/NewsBanner'
 import { SectionHeading } from './components/SectionHeading'
+import { Photo } from './components/Photo'
 import {
   TvIcon,
   MusicNoteIcon,
@@ -30,21 +31,29 @@ import {
   bar,
 } from './data/club'
 import functionRoomStage from './assets/img/function-room-stage.jpg'
+import functionRoomStageWebp from './assets/img/function-room-stage.webp'
 import poolTableStage from './assets/img/pool-table-stage.jpg'
+import poolTableStageWebp from './assets/img/pool-table-stage.webp'
 import barTaps from './assets/img/bar-taps.jpg'
+import barTapsWebp from './assets/img/bar-taps.webp'
 import barWide from './assets/img/bar-wide.jpg'
+import barWideWebp from './assets/img/bar-wide.webp'
 import spiritsShelf from './assets/img/spirits-shelf.jpg'
+import spiritsShelfWebp from './assets/img/spirits-shelf.webp'
 import fruitMachines from './assets/img/fruit-machines.jpg'
+import fruitMachinesWebp from './assets/img/fruit-machines.webp'
 import smallBarCorner from './assets/img/small-bar-corner.jpg'
+import smallBarCornerWebp from './assets/img/small-bar-corner.webp'
 import membershipCard from './assets/img/membership-card.jpg'
+import membershipCardWebp from './assets/img/membership-card.webp'
 
 const gallery = [
-  { src: functionRoomStage, alt: 'Function room with stage, dance floor and disco lighting' },
-  { src: poolTableStage, alt: 'Pool table with the stage and dance floor behind' },
-  { src: barWide, alt: 'The club bar' },
-  { src: spiritsShelf, alt: 'Spirits shelf behind the bar' },
-  { src: fruitMachines, alt: 'Fruit machines' },
-  { src: smallBarCorner, alt: 'The small bar, with boxing memorabilia on the wall' },
+  { src: functionRoomStage, webp: functionRoomStageWebp, alt: 'Function room with stage, dance floor and disco lighting' },
+  { src: poolTableStage, webp: poolTableStageWebp, alt: 'Pool table with the stage and dance floor behind' },
+  { src: barWide, webp: barWideWebp, alt: 'The club bar' },
+  { src: spiritsShelf, webp: spiritsShelfWebp, alt: 'Spirits shelf behind the bar' },
+  { src: fruitMachines, webp: fruitMachinesWebp, alt: 'Fruit machines' },
+  { src: smallBarCorner, webp: smallBarCornerWebp, alt: 'The small bar, with boxing memorabilia on the wall' },
 ]
 
 const whatsOnIcons: Record<string, typeof TvIcon> = {
@@ -75,7 +84,7 @@ function App() {
       {/* Hero */}
       <section
         className="relative overflow-hidden bg-club-green bg-cover bg-center text-club-cream"
-        style={{ backgroundImage: `url(${functionRoomStage})` }}
+        style={{ backgroundImage: `url(${functionRoomStageWebp})` }}
       >
         <div className="absolute inset-0 bg-club-green-dark/80" aria-hidden="true" />
         <div
@@ -212,8 +221,9 @@ function App() {
           <div className="flex flex-col gap-6">
             <div className="group relative overflow-hidden rounded-xl border border-club-green/10 bg-white shadow-md transition hover:-translate-y-1 hover:shadow-xl">
               <div className="relative overflow-hidden">
-                <img
-                  src={barTaps}
+                <Photo
+                  jpg={barTaps}
+                  webp={barTapsWebp}
                   alt="Real ale, stout, cider and lager taps at the bar"
                   className="h-48 w-full object-cover transition duration-500 group-hover:scale-105"
                 />
@@ -284,8 +294,9 @@ function App() {
               .
             </p>
           </div>
-          <img
-            src={membershipCard}
+          <Photo
+            jpg={membershipCard}
+            webp={membershipCardWebp}
             alt="Filton & District Social Club membership card"
             className="mx-auto h-40 w-auto rotate-2 rounded-lg border border-club-green/10 object-cover shadow-md transition duration-300 hover:rotate-0 hover:shadow-lg sm:h-48"
           />
@@ -302,8 +313,9 @@ function App() {
                 key={photo.src}
                 className="group relative h-40 overflow-hidden rounded-xl shadow-md ring-1 ring-club-green/5 transition hover:shadow-xl hover:ring-2 hover:ring-club-gold sm:h-48"
               >
-                <img
-                  src={photo.src}
+                <Photo
+                  jpg={photo.src}
+                  webp={photo.webp}
                   alt={photo.alt}
                   className="h-full w-full object-cover transition duration-500 group-hover:scale-110"
                 />
