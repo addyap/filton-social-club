@@ -106,7 +106,11 @@ function App() {
       <Header />
 
       <NewsBanner
-        message={`Next up: ${nextEvent.act} — ${formatEventDate(nextEvent.date)}`}
+        act={nextEvent.act}
+        dateLabel={formatEventDate(nextEvent.date)}
+        time={nextEvent.time}
+        price={nextEvent.price}
+        poster={posterFor(nextEvent.poster)}
         href="#entertainment"
       />
 
