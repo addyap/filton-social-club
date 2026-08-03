@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+  <circle cx="48" cy="48" r="46" fill="#1b4d3e" stroke="#c9a227" stroke-width="3" />
+  <circle cx="48" cy="48" r="38" fill="none" stroke="#c9a227" stroke-width="1" />
+  <text x="48" y="44" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-weight="700" fill="#faf7ee">FDSC</text>
+  <text x="48" y="62" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="9" letter-spacing="1.5" fill="#c9a227">FILTON</text>
+</svg>
