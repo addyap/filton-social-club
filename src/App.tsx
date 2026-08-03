@@ -106,33 +106,8 @@ function App() {
       <Header />
 
       <NewsBanner
-        items={[
-          {
-            tag: 'Entertainment',
-            title: nextEvent.act,
-            detail: `${formatEventDate(nextEvent.date)}${nextEvent.time ? ` · ${nextEvent.time}` : ''}${nextEvent.price ? ` · ${nextEvent.price}` : ''}`,
-            href: '#entertainment',
-            poster: posterFor(nextEvent.poster),
-          },
-          {
-            tag: 'Skittles',
-            title: 'Summer Skittle League 2026',
-            detail: `${summerSkittles.season} · fixtures out now`,
-            href: '#room-hire',
-          },
-          {
-            tag: 'Bingo',
-            title: 'Eyes down',
-            detail: 'Wednesday and Sunday nights',
-            href: '#whats-on',
-          },
-          {
-            tag: 'Live Sport',
-            title: 'Sky Sports & TNT Sports',
-            detail: 'Every big fixture, live at the bar',
-            href: '#whats-on',
-          },
-        ]}
+        message={`Next up: ${nextEvent.act} — ${formatEventDate(nextEvent.date)}`}
+        href="#entertainment"
       />
 
       {/* Hero */}
