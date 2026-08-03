@@ -4,7 +4,6 @@ import { Logo } from './components/Logo'
 import { NewsBanner } from './components/NewsBanner'
 import { SectionHeading } from './components/SectionHeading'
 import { Photo } from './components/Photo'
-import { SectionWatermark } from './components/SectionWatermark'
 import {
   TvIcon,
   MusicNoteIcon,
@@ -179,7 +178,6 @@ function App() {
 
       {/* What's On */}
       <section id="whats-on" className="relative overflow-hidden mx-auto max-w-6xl px-4 py-16">
-        <SectionWatermark />
         <div className="relative">
         <SectionHeading
           eyebrow="On the calendar"
@@ -277,7 +275,6 @@ function App() {
 
       {/* Skittles */}
       <section id="skittles" className="relative overflow-hidden mx-auto max-w-6xl px-4 py-16">
-        <SectionWatermark />
         <div className="relative">
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-club-green to-club-green-dark text-club-cream shadow-md">
             <SkittlePinIcon className="h-8 w-8" />
@@ -385,7 +382,6 @@ function App() {
 
       {/* Facilities & Games */}
       <section id="room-hire" className="relative overflow-hidden mx-auto max-w-6xl px-4 py-16">
-        <SectionWatermark />
         <div className="relative grid gap-10 sm:grid-cols-2 sm:items-start">
           <div>
             <p className="font-sans-ui text-xs font-bold uppercase tracking-[0.2em] text-club-gold">
@@ -505,7 +501,6 @@ function App() {
 
       {/* Gallery */}
       <section id="gallery" className="relative overflow-hidden bg-club-green-dark/5">
-        <SectionWatermark />
         <div className="relative mx-auto max-w-6xl px-4 py-16">
           <SectionHeading eyebrow="Take a look inside" title="Around the Club" />
           <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3">
@@ -531,7 +526,6 @@ function App() {
 
       {/* Committee */}
       <section className="relative overflow-hidden bg-club-green-dark/5">
-        <SectionWatermark />
         <div className="relative mx-auto max-w-6xl px-4 py-16">
           <SectionHeading eyebrow="Who runs the club" title="Your Committee" />
           <div className="mx-auto mt-10 grid max-w-3xl gap-6 font-sans-ui sm:grid-cols-3">
@@ -558,7 +552,6 @@ function App() {
 
       {/* Opening Hours */}
       <section id="opening-hours" className="relative overflow-hidden mx-auto max-w-6xl px-4 py-16">
-        <SectionWatermark />
         <div className="relative">
         <SectionHeading eyebrow="Plan your visit" title="Opening & Closing Times" />
         <div className="mx-auto mt-10 max-w-xl overflow-hidden rounded-xl border border-club-green/10 bg-white shadow-md">
