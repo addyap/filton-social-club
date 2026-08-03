@@ -176,36 +176,6 @@ function App() {
         </div>
       </section>
 
-      {/* What's On */}
-      <section id="whats-on" className="relative overflow-hidden mx-auto max-w-6xl px-4 py-16">
-        <div className="relative">
-        <SectionHeading
-          eyebrow="On the calendar"
-          title="What's On"
-          subtitle="Something happening most nights of the week — all in a members-only, dog-friendly club."
-        />
-        <div className="mt-10 grid gap-6 sm:grid-cols-2">
-          {whatsOn.map((item) => {
-            const Icon = whatsOnIcons[item.title]
-            return (
-              <div
-                key={item.title}
-                className="group relative overflow-hidden rounded-xl border border-club-green/10 border-l-4 border-l-club-gold bg-white p-6 shadow-sm transition hover:-translate-y-1.5 hover:shadow-xl"
-              >
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-club-green to-club-green-dark text-club-cream shadow-sm transition group-hover:scale-110">
-                  {Icon && <Icon className="h-6 w-6" />}
-                </div>
-                <h3 className="mt-4 text-lg font-bold text-club-green">{item.title}</h3>
-                <p className="mt-2 font-sans-ui text-sm leading-relaxed text-gray-700">{item.blurb}</p>
-              </div>
-            )
-          })}
-        </div>
-        </div>
-      </section>
-
-      <SectionDivider />
-
       {/* This month's entertainment */}
       <section id="entertainment" className="relative overflow-hidden bg-club-green-dark/5">
         <div className="pointer-events-none absolute inset-0 text-club-green/[0.04] bg-dot-pattern" aria-hidden="true" />
@@ -268,6 +238,36 @@ function App() {
               )
             })}
           </div>
+        </div>
+      </section>
+
+      <SectionDivider />
+
+      {/* What's On */}
+      <section id="whats-on" className="relative overflow-hidden mx-auto max-w-6xl px-4 py-16">
+        <div className="relative">
+        <SectionHeading
+          eyebrow="On the calendar"
+          title="What's On"
+          subtitle="Something happening most nights of the week — all in a members-only, dog-friendly club."
+        />
+        <div className="mt-10 grid gap-6 sm:grid-cols-2">
+          {whatsOn.map((item) => {
+            const Icon = whatsOnIcons[item.title]
+            return (
+              <div
+                key={item.title}
+                className="group relative overflow-hidden rounded-xl border border-club-green/10 border-l-4 border-l-club-gold bg-white p-6 shadow-sm transition hover:-translate-y-1.5 hover:shadow-xl"
+              >
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-club-green to-club-green-dark text-club-cream shadow-sm transition group-hover:scale-110">
+                  {Icon && <Icon className="h-6 w-6" />}
+                </div>
+                <h3 className="mt-4 text-lg font-bold text-club-green">{item.title}</h3>
+                <p className="mt-2 font-sans-ui text-sm leading-relaxed text-gray-700">{item.blurb}</p>
+              </div>
+            )
+          })}
+        </div>
         </div>
       </section>
 
