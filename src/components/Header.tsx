@@ -16,9 +16,9 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 bg-club-green text-club-cream shadow-md font-sans-ui">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-3 py-2.5 sm:gap-4 sm:px-4 sm:py-3">
-        <a href="#top" className="flex min-w-0 flex-1 items-center gap-2 sm:gap-3">
+        <a href="#top" className="flex flex-1 items-center justify-start gap-2 sm:gap-3">
           <Logo className="h-9 w-9 shrink-0 sm:h-12 sm:w-12" />
-          <span className="truncate text-sm font-semibold leading-tight sm:text-lg lg:text-xl">
+          <span className="text-xs font-semibold leading-tight sm:text-lg lg:text-xl">
             {club.name}
           </span>
         </a>
