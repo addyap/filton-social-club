@@ -32,7 +32,7 @@ export function Header() {
           href={club.facebookUrl}
           target="_blank"
           rel="noreferrer noopener"
-          className="shrink-0 rounded-full bg-club-gold px-3 py-1.5 text-xs font-semibold text-club-green-dark transition hover:brightness-105 sm:px-4 sm:py-2 sm:text-sm"
+          className="shrink-0 rounded-full bg-club-gold px-3 py-1.5 text-xs font-semibold text-club-green-dark shadow-sm transition hover:-translate-y-0.5 hover:brightness-105 sm:px-4 sm:py-2 sm:text-sm"
         >
           Facebook
         </a>
