@@ -31,6 +31,7 @@ import {
   upcomingEvents,
   formatEventDate,
   skittles,
+  summerSkittles,
   bar,
 } from './data/club'
 import functionRoomStage from './assets/img/function-room-stage.jpg'
@@ -49,6 +50,8 @@ import smallBarCorner from './assets/img/small-bar-corner.jpg'
 import smallBarCornerWebp from './assets/img/small-bar-corner.webp'
 import membershipCard from './assets/img/membership-card.jpg'
 import membershipCardWebp from './assets/img/membership-card.webp'
+import summerSkittlesFixtures from './assets/img/summer-skittles-fixtures.jpg'
+import summerSkittlesFixturesWebp from './assets/img/summer-skittles-fixtures.webp'
 /* Posters are picked up automatically from src/assets/img/posters, so adding a
    new act only means running the poster script and adding the event to club.ts. */
 const posterJpgs = import.meta.glob('./assets/img/posters/*.jpg', {
@@ -313,6 +316,25 @@ function App() {
                 </a>
                 .
               </p>
+              <div className="mt-5 border-t border-club-green/10 pt-5">
+                <h4 className="text-base font-bold text-club-green">{summerSkittles.name}</h4>
+                <p className="mt-2 font-sans-ui text-sm leading-relaxed text-gray-700">
+                  {summerSkittles.season} &middot; {summerSkittles.weeks} weeks. {summerSkittles.format}, plus three
+                  cup competitions: {summerSkittles.cups.join(', ')}.
+                </p>
+                <picture>
+                  <source srcSet={summerSkittlesFixturesWebp} type="image/webp" />
+                  <img
+                    src={summerSkittlesFixtures}
+                    alt="Filton and District Summer Skittle League 2026 fixture list"
+                    width={1400}
+                    height={2276}
+                    loading="lazy"
+                    decoding="async"
+                    className="mt-3 w-full rounded-lg border border-club-green/10"
+                  />
+                </picture>
+              </div>
             </div>
           </div>
         </div>

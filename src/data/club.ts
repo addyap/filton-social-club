@@ -138,6 +138,14 @@ export const skittles = {
   contactPhone: '07954 604105',
 }
 
+export const summerSkittles = {
+  name: 'Filton and District Summer Skittle League 2026',
+  season: '1 June – 24 August 2026',
+  weeks: 13,
+  format: 'League games are all-in, played on Alley 2',
+  cups: ['All In Cup', 'Front First Cup', '4 Corners Cup'],
+}
+
 export const facilities = [
   'Function room with stage, dance floor and disco lighting for live entertainment',
   'Pool table and darts board',
