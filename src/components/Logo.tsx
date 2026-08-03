@@ -11,7 +11,7 @@ export function Logo({ className }: LogoProps) {
       role="img"
       aria-label="Filton & District Social Club emblem"
     >
-      <circle cx="48" cy="48" r="46" fill="#1b4d3e" stroke="#c9a227" strokeWidth="3" />
+      <circle cx="48" cy="48" r="46" fill="#1c3358" stroke="#c9a227" strokeWidth="3" />
       <circle cx="48" cy="48" r="38" fill="none" stroke="#c9a227" strokeWidth="1" />
       <text
         x="48"

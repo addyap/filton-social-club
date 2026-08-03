@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --color-club-green: #1b4d3e;
-  --color-club-green-dark: #12332a;
+  --color-club-green: #1c3358;
+  --color-club-green-dark: #101d33;
   --color-club-gold: #c9a227;
   --color-club-cream: #faf7ee;
 }
