@@ -4,6 +4,7 @@ import { Logo } from './components/Logo'
 import { NewsBanner } from './components/NewsBanner'
 import { SectionHeading } from './components/SectionHeading'
 import { Photo } from './components/Photo'
+import { SectionWatermark } from './components/SectionWatermark'
 import {
   TvIcon,
   MusicNoteIcon,
@@ -18,7 +19,6 @@ import {
   CoinIcon,
   StarIcon,
   DiscoIcon,
-  MegaphoneIcon,
   SectionDivider,
 } from './components/Icons'
 import {
@@ -84,7 +84,7 @@ function App() {
 
       {/* Hero */}
       <section
-        className="relative overflow-hidden bg-club-green bg-cover bg-[position:15%_center] text-club-cream"
+        className="relative overflow-hidden bg-club-green bg-cover bg-[position:20%_5%] text-club-cream"
         style={{ backgroundImage: `url(${functionRoomStageWebp})` }}
       >
         <div className="absolute inset-0 bg-club-green-dark/80" aria-hidden="true" />
@@ -125,9 +125,8 @@ function App() {
 
       {/* What's On */}
       <section id="whats-on" className="relative overflow-hidden mx-auto max-w-6xl px-4 py-16">
-        <MegaphoneIcon
-          className="pointer-events-none absolute -right-8 -top-8 h-56 w-56 rotate-12 text-club-green/[0.05]"
-        />
+        <SectionWatermark />
+        <div className="relative">
         <SectionHeading
           eyebrow="On the calendar"
           title="What's On"
@@ -149,6 +148,7 @@ function App() {
               </div>
             )
           })}
+        </div>
         </div>
       </section>
 
@@ -194,12 +194,10 @@ function App() {
 
       {/* Facilities & Games */}
       <section id="room-hire" className="relative overflow-hidden mx-auto max-w-6xl px-4 py-16">
-        <div className="grid gap-10 sm:grid-cols-2 sm:items-start">
-          <div className="relative">
-            <ShieldIcon
-              className="pointer-events-none absolute -left-10 -top-6 h-56 w-56 -rotate-12 text-club-green/[0.05]"
-            />
-            <p className="relative font-sans-ui text-xs font-bold uppercase tracking-[0.2em] text-club-gold">
+        <SectionWatermark />
+        <div className="relative grid gap-10 sm:grid-cols-2 sm:items-start">
+          <div>
+            <p className="font-sans-ui text-xs font-bold uppercase tracking-[0.2em] text-club-gold">
               What we offer
             </p>
             <h2 className="mt-2 text-2xl font-bold text-club-green sm:text-3xl">Facilities &amp; Room Hire</h2>
@@ -312,9 +310,7 @@ function App() {
 
       {/* Gallery */}
       <section id="gallery" className="relative overflow-hidden bg-club-green-dark/5">
-        <StarIcon
-          className="pointer-events-none absolute left-1/2 -top-10 h-64 w-64 -translate-x-1/2 text-club-green/[0.05]"
-        />
+        <SectionWatermark />
         <div className="relative mx-auto max-w-6xl px-4 py-16">
           <SectionHeading eyebrow="Take a look inside" title="Around the Club" />
           <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3">
@@ -340,9 +336,7 @@ function App() {
 
       {/* Committee */}
       <section className="relative overflow-hidden bg-club-green-dark/5">
-        <CrownIcon
-          className="pointer-events-none absolute -right-10 -bottom-10 h-64 w-64 rotate-12 text-club-green/[0.05]"
-        />
+        <SectionWatermark />
         <div className="relative mx-auto max-w-6xl px-4 py-16">
           <SectionHeading eyebrow="Who runs the club" title="Your Committee" />
           <div className="mx-auto mt-10 grid max-w-3xl gap-6 font-sans-ui sm:grid-cols-3">
@@ -369,9 +363,8 @@ function App() {
 
       {/* Opening Hours */}
       <section id="opening-hours" className="relative overflow-hidden mx-auto max-w-6xl px-4 py-16">
-        <ClockIcon
-          className="pointer-events-none absolute -left-10 -bottom-10 h-56 w-56 -rotate-12 text-club-green/[0.05]"
-        />
+        <SectionWatermark />
+        <div className="relative">
         <SectionHeading eyebrow="Plan your visit" title="Opening & Closing Times" />
         <div className="mx-auto mt-10 max-w-xl overflow-hidden rounded-xl border border-club-green/10 bg-white shadow-md">
           {openingHours.map((block) => (
@@ -394,6 +387,7 @@ function App() {
         <p className="mx-auto mt-4 max-w-xl text-center font-sans-ui text-xs text-gray-600">
           Last orders 15 minutes before closing. Hours may be amended subject to attendance.
         </p>
+        </div>
       </section>
 
       {/* Contact / Find us */}
@@ -402,28 +396,42 @@ function App() {
           className="pointer-events-none absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-club-gold/10 blur-3xl"
           aria-hidden="true"
         />
-        <div className="relative mx-auto max-w-6xl px-4 py-16 text-center">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-club-gold to-club-gold/70 text-club-green-dark shadow-md">
-            <MapPinIcon className="h-7 w-7" />
+        <div className="relative mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:grid-cols-2 sm:items-center">
+          <div className="text-center sm:text-left">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-club-gold to-club-gold/70 text-club-green-dark shadow-md sm:mx-0">
+              <MapPinIcon className="h-7 w-7" />
+            </div>
+            <div className="mt-4">
+              <SectionHeading title="Find Us" light />
+            </div>
+            <p className="mt-4 font-sans-ui text-club-cream/90">{club.legalName}</p>
+            <p className="font-sans-ui text-club-cream/90">
+              {club.address.line1}, {club.address.town}, {club.address.city} {club.address.postcode}
+            </p>
+            <p className="mt-2 font-sans-ui text-sm text-club-cream/70">
+              Please respect our neighbours when leaving the premises.
+            </p>
+            <a
+              href={club.facebookUrl}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="mt-6 inline-block rounded-full bg-club-gold px-6 py-3 font-sans-ui text-sm font-semibold text-club-green-dark shadow-lg shadow-club-gold/20 transition hover:-translate-y-0.5 hover:brightness-105 active:translate-y-0"
+            >
+              Message us on Facebook
+            </a>
           </div>
-          <div className="mt-4">
-            <SectionHeading title="Find Us" light />
+          <div className="h-72 w-full overflow-hidden rounded-xl border border-club-cream/20 shadow-lg sm:h-80">
+            <iframe
+              title="Map showing Filton & District Social Club"
+              src={`https://www.google.com/maps?q=${encodeURIComponent(
+                `${club.legalName}, ${club.address.line1}, ${club.address.town}, ${club.address.city} ${club.address.postcode}`,
+              )}&output=embed`}
+              className="h-full w-full"
+              style={{ border: 0 }}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
           </div>
-          <p className="mt-4 font-sans-ui text-club-cream/90">{club.legalName}</p>
-          <p className="font-sans-ui text-club-cream/90">
-            {club.address.line1}, {club.address.town}, {club.address.city} {club.address.postcode}
-          </p>
-          <p className="mt-2 font-sans-ui text-sm text-club-cream/70">
-            Please respect our neighbours when leaving the premises.
-          </p>
-          <a
-            href={club.facebookUrl}
-            target="_blank"
-            rel="noreferrer noopener"
-            className="mt-6 inline-block rounded-full bg-club-gold px-6 py-3 font-sans-ui text-sm font-semibold text-club-green-dark shadow-lg shadow-club-gold/20 transition hover:-translate-y-0.5 hover:brightness-105 active:translate-y-0"
-          >
-            Message us on Facebook
-          </a>
         </div>
       </section>
 
