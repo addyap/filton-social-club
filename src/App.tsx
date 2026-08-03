@@ -18,6 +18,7 @@ import {
   CoinIcon,
   StarIcon,
   DiscoIcon,
+  MegaphoneIcon,
   SectionDivider,
 } from './components/Icons'
 import {
@@ -123,7 +124,10 @@ function App() {
       </section>
 
       {/* What's On */}
-      <section id="whats-on" className="mx-auto max-w-6xl px-4 py-16">
+      <section id="whats-on" className="relative overflow-hidden mx-auto max-w-6xl px-4 py-16">
+        <MegaphoneIcon
+          className="pointer-events-none absolute -right-8 -top-8 h-56 w-56 rotate-12 text-club-green/[0.05]"
+        />
         <SectionHeading
           eyebrow="On the calendar"
           title="What's On"
@@ -189,10 +193,13 @@ function App() {
       <SectionDivider />
 
       {/* Facilities & Games */}
-      <section id="room-hire" className="mx-auto max-w-6xl px-4 py-16">
+      <section id="room-hire" className="relative overflow-hidden mx-auto max-w-6xl px-4 py-16">
         <div className="grid gap-10 sm:grid-cols-2 sm:items-start">
-          <div>
-            <p className="font-sans-ui text-xs font-bold uppercase tracking-[0.2em] text-club-gold">
+          <div className="relative">
+            <ShieldIcon
+              className="pointer-events-none absolute -left-10 -top-6 h-56 w-56 -rotate-12 text-club-green/[0.05]"
+            />
+            <p className="relative font-sans-ui text-xs font-bold uppercase tracking-[0.2em] text-club-gold">
               What we offer
             </p>
             <h2 className="mt-2 text-2xl font-bold text-club-green sm:text-3xl">Facilities &amp; Room Hire</h2>
@@ -304,8 +311,11 @@ function App() {
       </section>
 
       {/* Gallery */}
-      <section id="gallery" className="bg-club-green-dark/5">
-        <div className="mx-auto max-w-6xl px-4 py-16">
+      <section id="gallery" className="relative overflow-hidden bg-club-green-dark/5">
+        <StarIcon
+          className="pointer-events-none absolute left-1/2 -top-10 h-64 w-64 -translate-x-1/2 text-club-green/[0.05]"
+        />
+        <div className="relative mx-auto max-w-6xl px-4 py-16">
           <SectionHeading eyebrow="Take a look inside" title="Around the Club" />
           <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3">
             {gallery.map((photo) => (
@@ -329,8 +339,11 @@ function App() {
       </section>
 
       {/* Committee */}
-      <section className="bg-club-green-dark/5">
-        <div className="mx-auto max-w-6xl px-4 py-16">
+      <section className="relative overflow-hidden bg-club-green-dark/5">
+        <CrownIcon
+          className="pointer-events-none absolute -right-10 -bottom-10 h-64 w-64 rotate-12 text-club-green/[0.05]"
+        />
+        <div className="relative mx-auto max-w-6xl px-4 py-16">
           <SectionHeading eyebrow="Who runs the club" title="Your Committee" />
           <div className="mx-auto mt-10 grid max-w-3xl gap-6 font-sans-ui sm:grid-cols-3">
             {committeeRoles.map(({ label, value, Icon }) => (
@@ -355,7 +368,10 @@ function App() {
       <SectionDivider />
 
       {/* Opening Hours */}
-      <section id="opening-hours" className="mx-auto max-w-6xl px-4 py-16">
+      <section id="opening-hours" className="relative overflow-hidden mx-auto max-w-6xl px-4 py-16">
+        <ClockIcon
+          className="pointer-events-none absolute -left-10 -bottom-10 h-56 w-56 -rotate-12 text-club-green/[0.05]"
+        />
         <SectionHeading eyebrow="Plan your visit" title="Opening & Closing Times" />
         <div className="mx-auto mt-10 max-w-xl overflow-hidden rounded-xl border border-club-green/10 bg-white shadow-md">
           {openingHours.map((block) => (
