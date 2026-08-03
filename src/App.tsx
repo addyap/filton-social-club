@@ -35,11 +35,15 @@ function App() {
       <Header />
 
       {/* Hero */}
-      <section className="bg-club-green text-club-cream">
-        <div className="mx-auto flex max-w-6xl flex-col items-center gap-6 px-4 py-16 text-center sm:py-24">
-          <Logo className="h-24 w-24" />
-          <h1 className="text-3xl font-bold sm:text-5xl">{club.name}</h1>
-          <p className="max-w-2xl font-sans-ui text-base text-club-cream/90 sm:text-lg">
+      <section
+        className="relative bg-club-green bg-cover bg-center text-club-cream"
+        style={{ backgroundImage: `url(${functionRoomStage})` }}
+      >
+        <div className="absolute inset-0 bg-club-green-dark/80" aria-hidden="true" />
+        <div className="relative mx-auto flex max-w-6xl flex-col items-center gap-4 px-4 py-10 text-center sm:py-14">
+          <Logo className="h-16 w-16" />
+          <h1 className="text-2xl font-bold sm:text-4xl">{club.name}</h1>
+          <p className="max-w-2xl font-sans-ui text-sm text-club-cream/90 sm:text-base">
             Bristol&rsquo;s friendly members&rsquo; club — live sport, Saturday night entertainment,
             bingo, skittles and a warm welcome for members and their guests.
           </p>
