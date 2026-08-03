@@ -8,7 +8,6 @@ const navLinks = [
   { href: '#membership', label: 'Membership' },
   { href: '#gallery', label: 'Gallery' },
   { href: '#opening-hours', label: 'Opening Hours' },
-  { href: '#facebook', label: 'Facebook Feed' },
   { href: '#contact', label: 'Find Us' },
 ]
 

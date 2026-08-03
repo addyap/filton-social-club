@@ -1,7 +1,6 @@
 import { Header } from './components/Header'
 import { Footer } from './components/Footer'
 import { Logo } from './components/Logo'
-import { FacebookFeed } from './components/FacebookFeed'
 import { NewsBanner } from './components/NewsBanner'
 import {
   TvIcon,
@@ -86,14 +85,14 @@ function App() {
           className="pointer-events-none absolute -right-20 -bottom-24 h-72 w-72 rounded-full bg-club-gold/10 blur-3xl"
           aria-hidden="true"
         />
-        <div className="relative mx-auto flex max-w-6xl flex-col items-start gap-4 px-4 py-10 text-left sm:py-14">
+        <div className="relative mx-auto flex max-w-6xl flex-col items-center gap-4 px-4 py-10 text-center sm:py-14">
           <Logo className="h-16 w-16 drop-shadow-lg" />
           <h1 className="text-2xl font-bold sm:text-4xl">{club.name}</h1>
           <p className="max-w-2xl font-sans-ui text-sm text-club-cream/90 sm:text-base">
             Bristol&rsquo;s friendly members&rsquo; club — live sport, Saturday night entertainment,
             bingo, skittles and a warm welcome for members and their guests.
           </p>
-          <div className="flex flex-wrap justify-start gap-3 font-sans-ui text-sm font-semibold">
+          <div className="flex flex-wrap justify-center gap-3 font-sans-ui text-sm font-semibold">
             <a
               href="#membership"
               className="rounded-full bg-club-gold px-6 py-3 text-club-green-dark transition hover:brightness-105"
@@ -353,21 +352,6 @@ function App() {
         <p className="mx-auto mt-4 max-w-xl text-center font-sans-ui text-xs text-gray-600">
           Last orders 15 minutes before closing. Hours may be amended subject to attendance.
         </p>
-      </section>
-
-      <SectionDivider />
-
-      {/* Facebook feed */}
-      <section id="facebook" className="bg-club-green-dark/5">
-        <div className="mx-auto max-w-6xl px-4 py-16 text-center">
-          <h2 className="text-2xl font-bold text-club-green sm:text-3xl">Latest from Facebook</h2>
-          <p className="mx-auto mt-2 max-w-xl font-sans-ui text-sm text-club-green/70">
-            Catch up with what&rsquo;s happening at the club between visits.
-          </p>
-          <div className="mx-auto mt-8 w-fit max-w-full overflow-hidden rounded-xl border border-club-green/10 bg-white p-2 shadow-sm">
-            <FacebookFeed groupUrl={club.facebookUrl} />
-          </div>
-        </div>
       </section>
 
       {/* Contact / Find us */}
