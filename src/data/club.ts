@@ -74,8 +74,8 @@ export const entertainmentCalendar = {
   month: 'August 2026',
   note: 'Members’ prices shown — non-members are £2 extra.',
   dates: [
-    { date: 'Sat 1st', act: 'Guy Young', price: '£5' },
-    { date: 'Sat 8th', act: 'Rowland', price: '£5' },
+    { date: 'Sat 1st', act: 'Guy Young', price: '£5', photo: 'guy-young' },
+    { date: 'Sat 8th', act: 'Rowland', price: '£5', photo: 'rowland' },
     { date: 'Sat 15th', act: 'Mark Godfrey', price: '£5' },
     { date: 'Sat 22nd', act: 'Dresdens', price: '£5' },
     { date: 'Sat 29th', act: 'Ryan Mills', price: '£5' },

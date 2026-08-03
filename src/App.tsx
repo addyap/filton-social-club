@@ -47,6 +47,10 @@ import smallBarCorner from './assets/img/small-bar-corner.jpg'
 import smallBarCornerWebp from './assets/img/small-bar-corner.webp'
 import membershipCard from './assets/img/membership-card.jpg'
 import membershipCardWebp from './assets/img/membership-card.webp'
+import guyYoung from './assets/img/guy-young.jpg'
+import guyYoungWebp from './assets/img/guy-young.webp'
+import rowland from './assets/img/rowland.jpg'
+import rowlandWebp from './assets/img/rowland.webp'
 
 const gallery = [
   { src: functionRoomStage, webp: functionRoomStageWebp, alt: 'Function room with stage, dance floor and disco lighting' },
@@ -56,6 +60,11 @@ const gallery = [
   { src: fruitMachines, webp: fruitMachinesWebp, alt: 'Fruit machines' },
   { src: smallBarCorner, webp: smallBarCornerWebp, alt: 'The small bar, with boxing memorabilia on the wall' },
 ]
+
+const performerPhotos: Record<string, { jpg: string; webp: string }> = {
+  'guy-young': { jpg: guyYoung, webp: guyYoungWebp },
+  rowland: { jpg: rowland, webp: rowlandWebp },
+}
 
 const whatsOnIcons: Record<string, typeof TvIcon> = {
   'Live sport': TvIcon,
@@ -169,23 +178,36 @@ function App() {
             />
           </div>
           <div className="mx-auto mt-8 max-w-lg overflow-hidden rounded-xl border border-club-green/10 bg-white shadow-md">
-            {entertainmentCalendar.dates.map((row, i) => (
-              <div
-                key={row.date}
-                className={`flex items-center justify-between border-b border-club-green/10 border-l-4 px-6 py-4 font-sans-ui text-sm transition last:border-b-0 hover:bg-club-gold/5 ${
-                  i === 0 ? 'border-l-club-gold' : 'border-l-transparent'
-                } ${i % 2 === 1 ? 'bg-club-green/[0.03]' : ''}`}
-              >
-                <span className="flex items-center gap-2 font-semibold text-club-green">
-                  <MusicNoteIcon className="h-4 w-4 text-club-gold" />
-                  {row.date}
-                </span>
-                <span className="text-gray-800">{row.act}</span>
-                <span className="rounded-full bg-club-gold/15 px-2.5 py-1 font-semibold text-club-green-dark">
-                  {row.price}
-                </span>
-              </div>
-            ))}
+            {entertainmentCalendar.dates.map((row, i) => {
+              const photo = row.photo ? performerPhotos[row.photo] : undefined
+              return (
+                <div
+                  key={row.date}
+                  className={`flex items-center justify-between border-b border-club-green/10 border-l-4 px-6 py-4 font-sans-ui text-sm transition last:border-b-0 hover:bg-club-gold/5 ${
+                    i === 0 ? 'border-l-club-gold' : 'border-l-transparent'
+                  } ${i % 2 === 1 ? 'bg-club-green/[0.03]' : ''}`}
+                >
+                  <span className="flex items-center gap-2 font-semibold text-club-green">
+                    <MusicNoteIcon className="h-4 w-4 text-club-gold" />
+                    {row.date}
+                  </span>
+                  <span className="flex items-center gap-2 text-gray-800">
+                    {photo && (
+                      <Photo
+                        jpg={photo.jpg}
+                        webp={photo.webp}
+                        alt={row.act}
+                        className="h-8 w-8 rounded-full border border-club-gold/40 object-cover"
+                      />
+                    )}
+                    {row.act}
+                  </span>
+                  <span className="rounded-full bg-club-gold/15 px-2.5 py-1 font-semibold text-club-green-dark">
+                    {row.price}
+                  </span>
+                </div>
+              )
+            })}
           </div>
         </div>
       </section>
