@@ -28,6 +28,8 @@ import {
   whatsOn,
   facilities,
   entertainmentCalendar,
+  upcomingEvents,
+  formatEventDate,
   skittles,
   bar,
 } from './data/club'
@@ -47,10 +49,25 @@ import smallBarCorner from './assets/img/small-bar-corner.jpg'
 import smallBarCornerWebp from './assets/img/small-bar-corner.webp'
 import membershipCard from './assets/img/membership-card.jpg'
 import membershipCardWebp from './assets/img/membership-card.webp'
-import guyYoung from './assets/img/posters/guy-young.jpg'
-import guyYoungWebp from './assets/img/posters/guy-young.webp'
-import rowland from './assets/img/posters/rowland.jpg'
-import rowlandWebp from './assets/img/posters/rowland.webp'
+/* Posters are picked up automatically from src/assets/img/posters, so adding a
+   new act only means running the poster script and adding the event to club.ts. */
+const posterJpgs = import.meta.glob('./assets/img/posters/*.jpg', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+}) as Record<string, string>
+const posterWebps = import.meta.glob('./assets/img/posters/*.webp', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+}) as Record<string, string>
+
+function posterFor(name: string | undefined) {
+  if (!name) return undefined
+  const jpg = posterJpgs[`./assets/img/posters/${name}.jpg`]
+  const webp = posterWebps[`./assets/img/posters/${name}.webp`]
+  return jpg && webp ? { jpg, webp } : undefined
+}
 
 const gallery = [
   { src: functionRoomStage, webp: functionRoomStageWebp, alt: 'Function room with stage, dance floor and disco lighting' },
@@ -61,10 +78,6 @@ const gallery = [
   { src: smallBarCorner, webp: smallBarCornerWebp, alt: 'The small bar, with boxing memorabilia on the wall' },
 ]
 
-const posters: Record<string, { jpg: string; webp: string }> = {
-  'guy-young': { jpg: guyYoung, webp: guyYoungWebp },
-  rowland: { jpg: rowland, webp: rowlandWebp },
-}
 
 const whatsOnIcons: Record<string, typeof TvIcon> = {
   'Live sport': TvIcon,
@@ -82,12 +95,15 @@ const committeeRoles = [
 ]
 
 function App() {
+  const events = upcomingEvents()
+  const nextEvent = events[0]
+
   return (
     <div id="top" className="min-h-screen">
       <Header />
 
       <NewsBanner
-        message={`This Saturday: ${entertainmentCalendar.dates[0].act} — ${entertainmentCalendar.dates[0].price} for members`}
+        message={`Next up: ${nextEvent.act} — ${formatEventDate(nextEvent.date)}`}
         href="#entertainment"
       />
 
@@ -172,47 +188,58 @@ function App() {
           </div>
           <div className="mt-4">
             <SectionHeading
-              eyebrow={entertainmentCalendar.month}
+              eyebrow="What's coming up"
               title="Saturday Entertainment"
               subtitle={entertainmentCalendar.note}
             />
           </div>
-          <div className="mx-auto mt-8 max-w-lg overflow-hidden rounded-xl border border-club-green/10 bg-white shadow-md">
-            {entertainmentCalendar.dates.map((row, i) => (
-              <div
-                key={row.date}
-                className={`flex items-center justify-between border-b border-club-green/10 border-l-4 px-6 py-4 font-sans-ui text-base transition last:border-b-0 hover:bg-club-gold/5 ${
-                  i === 0 ? 'border-l-club-gold' : 'border-l-transparent'
-                } ${i % 2 === 1 ? 'bg-club-green/[0.03]' : ''}`}
-              >
-                <span className="flex items-center gap-2 font-semibold text-club-green">
-                  <MusicNoteIcon className="h-4 w-4 text-club-gold" />
-                  {row.date}
-                </span>
-                <span className="text-gray-800">{row.act}</span>
-                <span className="rounded-full bg-club-gold/15 px-2.5 py-1 font-semibold text-club-green-dark">
-                  {row.price}
-                </span>
-              </div>
-            ))}
-          </div>
 
-          <div className="mt-12 grid gap-8 sm:grid-cols-2">
-            {entertainmentCalendar.dates
-              .filter((row) => row.poster && posters[row.poster])
-              .map((row) => (
-                <figure key={row.date} className="overflow-hidden rounded-xl bg-white shadow-lg ring-1 ring-club-green/10">
-                  <Photo
-                    jpg={posters[row.poster!].jpg}
-                    webp={posters[row.poster!].webp}
-                    alt={`Poster for ${row.act} at Filton & District Social Club, ${row.date}`}
-                    className="w-full"
-                  />
-                  <figcaption className="px-5 py-4 text-center font-sans-ui text-base font-semibold text-club-green">
-                    {row.date} &mdash; {row.act}
-                  </figcaption>
-                </figure>
-              ))}
+          <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {events.map((event) => {
+              const poster = posterFor(event.poster)
+              return (
+                <article
+                  key={event.date}
+                  className="flex flex-col overflow-hidden rounded-xl bg-white shadow-md ring-1 ring-club-green/10 transition hover:-translate-y-1 hover:shadow-xl"
+                >
+                  {poster ? (
+                    <Photo
+                      jpg={poster.jpg}
+                      webp={poster.webp}
+                      alt={`Poster for ${event.act} at Filton & District Social Club`}
+                      className="w-full"
+                    />
+                  ) : (
+                    <div className="flex aspect-[3/4] items-center justify-center bg-gradient-to-br from-club-green to-club-green-dark">
+                      <MusicNoteIcon className="h-16 w-16 text-club-gold/50" />
+                    </div>
+                  )}
+
+                  <div className="flex flex-1 flex-col border-t-4 border-club-gold p-5 font-sans-ui">
+                    <time dateTime={event.date} className="text-sm font-bold uppercase tracking-wide text-club-gold">
+                      {formatEventDate(event.date)}
+                    </time>
+                    <h3 className="mt-1 text-xl font-bold text-club-green">{event.act}</h3>
+                    {event.blurb && (
+                      <p className="mt-2 text-sm leading-relaxed text-gray-700">{event.blurb}</p>
+                    )}
+                    <div className="mt-4 flex flex-wrap items-center gap-2 text-sm">
+                      {event.time && (
+                        <span className="flex items-center gap-1.5 rounded-full bg-club-green/[0.06] px-3 py-1 font-semibold text-club-green">
+                          <ClockIcon className="h-4 w-4 text-club-gold" />
+                          {event.time}
+                        </span>
+                      )}
+                      {event.price && (
+                        <span className="rounded-full bg-club-gold/15 px-3 py-1 font-semibold text-club-green-dark">
+                          {event.price}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </article>
+              )
+            })}
           </div>
         </div>
       </section>

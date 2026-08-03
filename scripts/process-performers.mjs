@@ -1,21 +1,65 @@
 import sharp from 'sharp'
 import path from 'node:path'
 
+const DL = '/Users/antonyaddy/Downloads'
 const outDir = path.resolve(import.meta.dirname, '../src/assets/img/posters')
 
-// Add a { src, name } entry here for each new event poster, then run:
-//   node scripts/process-performers.mjs
-// This resizes to a sensible max width (keeping the full poster legible)
-// and outputs a jpg + webp pair named `<name>.jpg` / `<name>.webp` into
-// src/assets/img/posters/. Reference `poster: '<name>'` on the matching
-// entry in entertainmentCalendar.dates in src/data/club.ts.
+// One entry per event poster.
+//
+// To add a future act:
+//   1. Save the poster image (anywhere — set `src` to its path).
+//   2. Add an entry below with a kebab-case `name`.
+//   3. Run: node scripts/process-performers.mjs
+//   4. Set `poster: '<name>'` on the matching event in
+//      src/data/club.ts -> entertainmentCalendar.events
+//
+// Optional fields for posters that arrive inside a shared/collage image:
+//   rotate — degrees clockwise, to straighten a tilted poster first
+//   crop   — { left, top, width, height } applied after any rotation
 const jobs = [
-  { src: '/Users/antonyaddy/Downloads/Guy Young.jpg', name: 'guy-young' },
-  { src: '/Users/antonyaddy/Downloads/Rowland.jog.jpg', name: 'rowland' },
+  { src: `${DL}/Guy Young.jpg`, name: 'guy-young' },
+  { src: `${DL}/Rowland.jog.jpg`, name: 'rowland' },
+  { src: `${DL}/EVENTS .jpg`, name: 'mark-godfrey' },
+  { src: `${DL}/AGAIN.jpg`, name: 'lucciano-frankie' },
+  { src: `${DL}/FILTON MORE MORE MORE.jpg`, name: 'abbaholics' },
+  { src: `${DL}/FILTON MORE.jpg`, name: 'top-of-the-pops-xmas' },
+
+  // The New Jersey Boys arrived tilted inside a collage — straighten, then crop.
+  {
+    src: `${DL}/OCTOBER TO NOVEMBER FILTON SOCIAL CLUB.jpg`,
+    name: 'new-jersey-boys',
+    rotate: 2.5,
+    crop: { left: 92, top: 50, width: 533, height: 743 },
+  },
+
+  // Three 2027 posters share one collage image.
+  {
+    src: `${DL}/MORE MORE FILTON.jpg`,
+    name: 'the-remakes',
+    crop: { left: 18, top: 18, width: 492, height: 735 },
+  },
+  {
+    src: `${DL}/MORE MORE FILTON.jpg`,
+    name: 'boo-ga-loo',
+    crop: { left: 535, top: 12, width: 533, height: 733 },
+  },
+  {
+    src: `${DL}/MORE MORE FILTON.jpg`,
+    name: 'outatime',
+    crop: { left: 212, top: 1128, width: 620, height: 775 },
+  },
 ]
 
 for (const job of jobs) {
-  const base = sharp(job.src).resize({ width: 900, withoutEnlargement: true })
+  let img = sharp(job.src)
+
+  if (job.rotate) {
+    const rotated = await img.rotate(job.rotate, { background: { r: 255, g: 255, b: 255 } }).toBuffer()
+    img = sharp(rotated)
+  }
+  if (job.crop) img = img.extract(job.crop)
+
+  const base = img.resize({ width: 900, withoutEnlargement: true })
   await base.clone().jpeg({ quality: 88 }).toFile(path.join(outDir, `${job.name}.jpg`))
   await base.clone().webp({ quality: 88 }).toFile(path.join(outDir, `${job.name}.webp`))
   console.log(job.name, 'done')

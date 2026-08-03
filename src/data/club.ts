@@ -70,21 +70,64 @@ export const whatsOn = [
   },
 ]
 
-// To add a poster for a future act: drop the full poster image in
-// Downloads, add it to the `jobs` list in scripts/process-performers.mjs,
-// run `node scripts/process-performers.mjs`, then set poster: '<name>'
-// below to match. The full poster is shown large and uncropped so the
-// date, time and details printed on it stay readable.
+export type EntertainmentEvent = {
+  /** ISO date — used for sorting and for the machine-readable <time> tag. */
+  date: string
+  act: string
+  /** Shown only where it's confirmed; special nights are often priced separately. */
+  price?: string
+  /** Doors/stage time as printed on the poster. */
+  time?: string
+  /** One-line description of what they play. */
+  blurb?: string
+  /** Matches a `name` in scripts/process-performers.mjs. */
+  poster?: string
+}
+
+// Adding a future act:
+//   1. Save the poster image somewhere.
+//   2. Add an entry to `jobs` in scripts/process-performers.mjs with a
+//      kebab-case name (that script also handles rotating/cropping a poster
+//      out of a collage image).
+//   3. Run: node scripts/process-performers.mjs
+//   4. Add the event below with `poster` set to the same name.
+// Events sort themselves by date, and past ones drop off automatically.
 export const entertainmentCalendar = {
-  month: 'August 2026',
-  note: 'Members’ prices shown — non-members are £2 extra.',
-  dates: [
-    { date: 'Sat 1st', act: 'Guy Young', price: '£5', poster: 'guy-young' },
-    { date: 'Sat 8th', act: 'Rowland', price: '£5', poster: 'rowland' },
-    { date: 'Sat 15th', act: 'Mark Godfrey', price: '£5' },
-    { date: 'Sat 22nd', act: 'Dresdens', price: '£5' },
-    { date: 'Sat 29th', act: 'Ryan Mills', price: '£5' },
-  ],
+  note: 'Members’ prices shown — non-members are £2 extra. Visitors welcome.',
+  events: [
+    { date: '2026-08-01', act: 'Guy Young', price: '£5', time: '8.45pm', blurb: 'Pop, rock, soul and reggae', poster: 'guy-young' },
+    { date: '2026-08-08', act: 'Rowland', price: '£5', time: '9.00pm', poster: 'rowland' },
+    { date: '2026-08-15', act: 'Mark Godfrey', price: '£5', time: '9.00pm', blurb: 'Rock, pop, country, reggae, ska, Motown and Northern Soul', poster: 'mark-godfrey' },
+    { date: '2026-08-22', act: 'Dresdens', price: '£5' },
+    { date: '2026-08-29', act: 'Ryan Mills', price: '£5' },
+    { date: '2026-10-10', act: 'The New Jersey Boys', blurb: 'The music of Frankie Valli and The Four Seasons, plus Showaddywaddy and other legends', poster: 'new-jersey-boys' },
+    { date: '2026-10-17', act: 'Lucciano & Frankie', time: '9.00pm', blurb: 'As seen on Britain’s Got Talent — one night only', poster: 'lucciano-frankie' },
+    { date: '2026-11-07', act: 'Abbaholics', blurb: 'The ultimate ABBA tribute, with Disco Dollz', poster: 'abbaholics' },
+    { date: '2026-12-12', act: 'The Top of the Pops Live Showband', blurb: 'Xmas Special — floor-filling Motown, soul, Northern Soul, 70s and 80s', poster: 'top-of-the-pops-xmas' },
+    { date: '2027-02-20', act: 'The Fabulous Remakes', blurb: '50s & 60s Jukebox Gold show', poster: 'the-remakes' },
+    { date: '2027-03-20', act: 'Boo-Ga-Loo', blurb: 'Music of the sensational 70s — Wizzard, Slade, T Rex, Bay City Rollers, Sweet', poster: 'boo-ga-loo' },
+    { date: '2027-05-22', act: 'Outatime', time: '9.00pm', blurb: '80s synth-pop tribute — Duran Duran, Pet Shop Boys, Erasure, Depeche Mode', poster: 'outatime' },
+  ] satisfies EntertainmentEvent[],
+}
+
+const dateFormatter = new Intl.DateTimeFormat('en-GB', {
+  weekday: 'short',
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC',
+})
+
+export function formatEventDate(iso: string) {
+  return dateFormatter.format(new Date(`${iso}T00:00:00Z`))
+}
+
+/** Upcoming events, soonest first. Falls back to the full list once every event is past. */
+export function upcomingEvents(now = new Date()): EntertainmentEvent[] {
+  const today = now.toISOString().slice(0, 10)
+  const sorted = [...entertainmentCalendar.events].sort((a, b) => a.date.localeCompare(b.date))
+  const upcoming = sorted.filter((e) => e.date >= today)
+  return upcoming.length > 0 ? upcoming : sorted
 }
 
 export const skittles = {
