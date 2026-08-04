@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://filton-social-club.vercel.app/sitemap.xml
+Sitemap: https://www.filtonsocialclub.co.uk/sitemap.xml
