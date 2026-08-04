@@ -104,6 +104,7 @@ export const entertainmentCalendar = {
     { date: '2026-10-17', act: 'Lucciano & Frankie', time: '9.00pm', blurb: 'As seen on Britain’s Got Talent — one night only', poster: 'lucciano-frankie' },
     { date: '2026-11-07', act: 'Abbaholics', blurb: 'The ultimate ABBA tribute, with Disco Dollz', poster: 'abbaholics' },
     { date: '2026-12-12', act: 'The Top of the Pops Live Showband', blurb: 'Xmas Special — floor-filling Motown, soul, Northern Soul, 70s and 80s', poster: 'top-of-the-pops-xmas' },
+    { date: '2026-12-31', act: 'The Treasury Band', blurb: 'New Year’s Eve — live music, good friends, great memories. Let’s see in 2027 together!', poster: 'new-years-eve' },
     { date: '2027-02-20', act: 'The Fabulous Remakes', blurb: '50s & 60s Jukebox Gold show', poster: 'the-remakes' },
     { date: '2027-03-20', act: 'Boo-Ga-Loo', blurb: 'Music of the sensational 70s — Wizzard, Slade, T Rex, Bay City Rollers, Sweet', poster: 'boo-ga-loo' },
     { date: '2027-05-22', act: 'Outatime', time: '9.00pm', blurb: '80s synth-pop tribute — Duran Duran, Pet Shop Boys, Erasure, Depeche Mode', poster: 'outatime' },

@@ -2,7 +2,8 @@ import sharp from 'sharp'
 import path from 'node:path'
 
 const DL = '/Users/antonyaddy/Downloads'
-const outDir = path.resolve(import.meta.dirname, '../src/assets/img/posters')
+const imgDir = path.resolve(import.meta.dirname, '../src/assets/img')
+const posterDir = path.join(imgDir, 'posters')
 
 // One entry per event poster.
 //
@@ -13,9 +14,10 @@ const outDir = path.resolve(import.meta.dirname, '../src/assets/img/posters')
 //   4. Set `poster: '<name>'` on the matching event in
 //      src/data/club.ts -> entertainmentCalendar.events
 //
-// Optional fields for posters that arrive inside a shared/collage image:
+// Optional fields:
 //   rotate — degrees clockwise, to straighten a tilted poster first
 //   crop   — { left, top, width, height } applied after any rotation
+//   dir    — 'img' to write outside the posters folder (non-event images)
 const jobs = [
   { src: `${DL}/Guy Young.jpg`, name: 'guy-young' },
   { src: `${DL}/Rowland.jog.jpg`, name: 'rowland' },
@@ -48,6 +50,16 @@ const jobs = [
     name: 'outatime',
     crop: { left: 212, top: 1128, width: 620, height: 775 },
   },
+  { src: `${DL}/New Year FDSC.jpg`, name: 'new-years-eve' },
+
+  // Not an act poster — the summer skittle league fixture sheet, cropped in
+  // from the surrounding desk so the laminated sheet fills the frame.
+  {
+    src: `${DL}/Summer Skittles.jpg`,
+    name: 'summer-skittles-fixtures',
+    crop: { left: 20, top: 100, width: 1825, height: 3000 },
+    dir: 'img',
+  },
 ]
 
 for (const job of jobs) {
@@ -59,8 +71,9 @@ for (const job of jobs) {
   }
   if (job.crop) img = img.extract(job.crop)
 
+  const dest = job.dir === 'img' ? imgDir : posterDir
   const base = img.resize({ width: 900, withoutEnlargement: true })
-  await base.clone().jpeg({ quality: 88 }).toFile(path.join(outDir, `${job.name}.jpg`))
-  await base.clone().webp({ quality: 88 }).toFile(path.join(outDir, `${job.name}.webp`))
+  await base.clone().jpeg({ quality: 88 }).toFile(path.join(dest, `${job.name}.jpg`))
+  await base.clone().webp({ quality: 88 }).toFile(path.join(dest, `${job.name}.webp`))
   console.log(job.name, 'done')
 }

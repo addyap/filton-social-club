@@ -101,6 +101,8 @@ const committeeRoles = [
 function App() {
   const events = upcomingEvents()
   const nextEvent = events[0]
+  const [featured, ...rest] = events
+  const featuredPoster = posterFor(featured?.poster)
 
   return (
     <div id="top" className="min-h-screen">
@@ -152,68 +154,119 @@ function App() {
         </div>
       </section>
 
-      {/* This month's entertainment */}
-      <section id="entertainment" className="relative overflow-hidden bg-club-green-dark/5">
-        <div className="pointer-events-none absolute inset-0 text-club-green/[0.04] bg-dot-pattern" aria-hidden="true" />
-        <div className="relative mx-auto max-w-6xl px-4 py-16">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-club-gold to-club-gold/70 text-club-green-dark shadow-md">
-            <DiscoIcon className="h-8 w-8" />
+      {/* Entertainment — the club's headline draw, given the most visual weight on the page */}
+      <section id="entertainment" className="relative overflow-hidden border-y-4 border-club-gold bg-club-green text-club-cream">
+        <div className="pointer-events-none absolute inset-0 text-club-cream/[0.04] bg-dot-pattern" aria-hidden="true" />
+        <div
+          className="pointer-events-none absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-club-gold/10 blur-3xl"
+          aria-hidden="true"
+        />
+        <div className="relative mx-auto max-w-6xl px-4 py-20 sm:py-24">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-club-gold to-club-gold/70 text-club-green-dark shadow-lg shadow-club-gold/20">
+            <DiscoIcon className="h-9 w-9" />
           </div>
           <div className="mt-4">
             <SectionHeading
-              eyebrow="What's coming up"
-              title="Saturday Entertainment"
+              eyebrow="The club's big nights out"
+              title="Live Entertainment"
               subtitle={entertainmentCalendar.note}
+              light
+              large
             />
           </div>
 
-          <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {events.map((event) => {
-              const poster = posterFor(event.poster)
-              return (
-                <article
-                  key={event.date}
-                  className="flex flex-col overflow-hidden rounded-xl bg-white shadow-md ring-1 ring-club-green/10 transition hover:-translate-y-1 hover:shadow-xl"
-                >
-                  {poster ? (
-                    <Photo
-                      jpg={poster.jpg}
-                      webp={poster.webp}
-                      alt={`Poster for ${event.act} at Filton & District Social Club`}
-                      className="w-full"
-                    />
-                  ) : (
-                    <div className="flex aspect-[3/4] items-center justify-center bg-gradient-to-br from-club-green to-club-green-dark">
-                      <MusicNoteIcon className="h-16 w-16 text-club-gold/50" />
-                    </div>
+          {featured && (
+            <article className="relative mx-auto mt-12 grid max-w-4xl gap-0 overflow-hidden rounded-2xl bg-club-cream shadow-2xl shadow-black/30 ring-2 ring-club-gold sm:grid-cols-2">
+              <span className="absolute left-4 top-4 z-10 rounded-full bg-club-gold px-3 py-1 font-sans-ui text-xs font-bold uppercase tracking-wide text-club-green-dark shadow">
+                Next up
+              </span>
+              {featuredPoster ? (
+                <Photo
+                  jpg={featuredPoster.jpg}
+                  webp={featuredPoster.webp}
+                  alt={`Poster for ${featured.act} at Filton & District Social Club`}
+                  className="h-full w-full object-cover"
+                  loading="eager"
+                />
+              ) : (
+                <div className="flex items-center justify-center bg-gradient-to-br from-club-green to-club-green-dark p-10">
+                  <MusicNoteIcon className="h-20 w-20 text-club-gold/50" />
+                </div>
+              )}
+              <div className="flex flex-col justify-center p-6 font-sans-ui sm:p-8">
+                <time dateTime={featured.date} className="text-sm font-bold uppercase tracking-wide text-club-gold">
+                  {formatEventDate(featured.date)}
+                </time>
+                <h3 className="mt-1 text-2xl font-bold text-club-green sm:text-3xl">{featured.act}</h3>
+                {featured.blurb && (
+                  <p className="mt-3 text-sm leading-relaxed text-gray-700">{featured.blurb}</p>
+                )}
+                <div className="mt-5 flex flex-wrap items-center gap-2 text-sm">
+                  {featured.time && (
+                    <span className="flex items-center gap-1.5 rounded-full bg-club-green/[0.06] px-3 py-1.5 font-semibold text-club-green">
+                      <ClockIcon className="h-4 w-4 text-club-gold" />
+                      {featured.time}
+                    </span>
                   )}
+                  {featured.price && (
+                    <span className="rounded-full bg-club-gold/15 px-3 py-1.5 font-semibold text-club-green-dark">
+                      {featured.price}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </article>
+          )}
 
-                  <div className="flex flex-1 flex-col border-t-4 border-club-gold p-5 font-sans-ui">
-                    <time dateTime={event.date} className="text-sm font-bold uppercase tracking-wide text-club-gold">
-                      {formatEventDate(event.date)}
-                    </time>
-                    <h3 className="mt-1 text-xl font-bold text-club-green">{event.act}</h3>
-                    {event.blurb && (
-                      <p className="mt-2 text-sm leading-relaxed text-gray-700">{event.blurb}</p>
+          {rest.length > 0 && (
+            <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {rest.map((event) => {
+                const poster = posterFor(event.poster)
+                return (
+                  <article
+                    key={event.date}
+                    className="flex flex-col overflow-hidden rounded-xl bg-club-cream shadow-md ring-1 ring-club-gold/20 transition hover:-translate-y-1 hover:shadow-xl"
+                  >
+                    {poster ? (
+                      <Photo
+                        jpg={poster.jpg}
+                        webp={poster.webp}
+                        alt={`Poster for ${event.act} at Filton & District Social Club`}
+                        className="w-full"
+                      />
+                    ) : (
+                      <div className="flex aspect-[3/4] items-center justify-center bg-gradient-to-br from-club-green to-club-green-dark">
+                        <MusicNoteIcon className="h-16 w-16 text-club-gold/50" />
+                      </div>
                     )}
-                    <div className="mt-4 flex flex-wrap items-center gap-2 text-sm">
-                      {event.time && (
-                        <span className="flex items-center gap-1.5 rounded-full bg-club-green/[0.06] px-3 py-1 font-semibold text-club-green">
-                          <ClockIcon className="h-4 w-4 text-club-gold" />
-                          {event.time}
-                        </span>
+
+                    <div className="flex flex-1 flex-col border-t-4 border-club-gold p-5 font-sans-ui">
+                      <time dateTime={event.date} className="text-sm font-bold uppercase tracking-wide text-club-gold">
+                        {formatEventDate(event.date)}
+                      </time>
+                      <h3 className="mt-1 text-xl font-bold text-club-green">{event.act}</h3>
+                      {event.blurb && (
+                        <p className="mt-2 text-sm leading-relaxed text-gray-700">{event.blurb}</p>
                       )}
-                      {event.price && (
-                        <span className="rounded-full bg-club-gold/15 px-3 py-1 font-semibold text-club-green-dark">
-                          {event.price}
-                        </span>
-                      )}
+                      <div className="mt-4 flex flex-wrap items-center gap-2 text-sm">
+                        {event.time && (
+                          <span className="flex items-center gap-1.5 rounded-full bg-club-green/[0.06] px-3 py-1 font-semibold text-club-green">
+                            <ClockIcon className="h-4 w-4 text-club-gold" />
+                            {event.time}
+                          </span>
+                        )}
+                        {event.price && (
+                          <span className="rounded-full bg-club-gold/15 px-3 py-1 font-semibold text-club-green-dark">
+                            {event.price}
+                          </span>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </article>
-              )
-            })}
-          </div>
+                  </article>
+                )
+              })}
+            </div>
+          )}
         </div>
       </section>
 
