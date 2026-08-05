@@ -1,13 +1,13 @@
 import sharp from 'sharp'
 import path from 'node:path'
 
-const src = '/Users/antonyaddy/Downloads/Filton Social Club logo.jpg'
+const src = '/Users/antonyaddy/Downloads/Filton and District Social Club Logo.jpg'
 const outDir = path.resolve(import.meta.dirname, '../src/assets/img')
 const publicDir = path.resolve(import.meta.dirname, '../public')
 
-const centerX = 511
+const centerX = 506
 const centerY = 512
-const radius = 466 // a few px past the detected ring edge (460) to avoid clipping it
+const radius = 465 // a few px past the detected ring edge (~460) to avoid clipping it
 const feather = 3
 
 const image = sharp(src)
@@ -35,6 +35,8 @@ const masked = sharp(rgba, { raw: { width, height, channels: 4 } })
 const trimmed = await masked.png().trim({ threshold: 10 }).toBuffer()
 
 await sharp(trimmed).resize(1024, 1024, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } }).toFile(path.join(outDir, 'logo.png'))
+await sharp(trimmed).resize(512, 512, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } }).toFile(path.join(outDir, 'logo-512.png'))
+await sharp(trimmed).resize(512, 512, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } }).webp({ quality: 90 }).toFile(path.join(outDir, 'logo-512.webp'))
 await sharp(trimmed).resize(512, 512).toFile(path.join(publicDir, 'icon-512.png'))
 await sharp(trimmed).resize(180, 180).toFile(path.join(publicDir, 'apple-touch-icon.png'))
 await sharp(trimmed).resize(64, 64).toFile(path.join(publicDir, 'favicon-64.png'))
