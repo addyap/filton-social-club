@@ -82,6 +82,15 @@ export type EntertainmentEvent = {
   blurb?: string
   /** Matches a `name` in scripts/process-performers.mjs. */
   poster?: string
+  /** Set only for advance-ticket shows — the regular Saturday nights are pay on the door. */
+  tickets?: {
+    /** ISO date sales open. Omit once already on sale. */
+    onSaleFrom?: string
+    /** Shown once on sale, e.g. "Less than 40 left" or "Plenty available". */
+    availability?: string
+    /** Styles the badge with more urgency, e.g. for low stock. */
+    urgent?: boolean
+  }
 }
 
 // Adding a future act:
@@ -100,11 +109,52 @@ export const entertainmentCalendar = {
     { date: '2026-08-15', act: 'Mark Godfrey', price: '£5', time: '9.00pm', blurb: 'Rock, pop, country, reggae, ska, Motown and Northern Soul', poster: 'mark-godfrey' },
     { date: '2026-08-22', act: 'Dresdens', price: '£5' },
     { date: '2026-08-29', act: 'Ryan Mills', price: '£5' },
-    { date: '2026-10-10', act: 'The New Jersey Boys', blurb: 'The music of Frankie Valli and The Four Seasons, plus Showaddywaddy and other legends', poster: 'new-jersey-boys' },
-    { date: '2026-10-17', act: 'Lucciano & Frankie', time: '9.00pm', blurb: 'As seen on Britain’s Got Talent — one night only', poster: 'lucciano-frankie' },
-    { date: '2026-11-07', act: 'Abbaholics', blurb: 'The ultimate ABBA tribute, with Disco Dollz', poster: 'abbaholics' },
-    { date: '2026-12-12', act: 'The Top of the Pops Live Showband', blurb: 'Xmas Special — floor-filling Motown, soul, Northern Soul, 70s and 80s', poster: 'top-of-the-pops-xmas' },
-    { date: '2026-12-31', act: 'The Treasury Band', blurb: 'New Year’s Eve — live music, good friends, great memories. Let’s see in 2027 together!', poster: 'new-years-eve' },
+    {
+      date: '2026-10-10',
+      act: 'The New Jersey Boys',
+      blurb: 'The music of Frankie Valli and The Four Seasons, plus Showaddywaddy and other legends',
+      poster: 'new-jersey-boys',
+      tickets: { availability: 'Less than 40 left', urgent: true },
+    },
+    {
+      date: '2026-10-17',
+      act: 'Lucciano & Frankie',
+      time: '9.00pm',
+      blurb: 'As seen on Britain’s Got Talent — one night only',
+      poster: 'lucciano-frankie',
+      tickets: { availability: 'Plenty available' },
+    },
+    {
+      date: '2026-11-07',
+      act: 'Abbaholics',
+      blurb: 'The ultimate ABBA tribute, with Disco Dollz',
+      poster: 'abbaholics',
+      tickets: { availability: 'Plenty available' },
+    },
+    {
+      date: '2026-11-14',
+      act: 'Men Behaving Badly',
+      tickets: { onSaleFrom: '2026-09-12' },
+    },
+    {
+      date: '2026-12-12',
+      act: 'The Top of the Pops Live Showband',
+      blurb: 'Xmas Special — floor-filling Motown, soul, Northern Soul, 70s and 80s',
+      poster: 'top-of-the-pops-xmas',
+      tickets: { onSaleFrom: '2026-10-03' },
+    },
+    {
+      date: '2026-12-24',
+      act: 'Encore',
+      tickets: { onSaleFrom: '2026-10-03' },
+    },
+    {
+      date: '2026-12-31',
+      act: 'The Treasury Band',
+      blurb: 'New Year’s Eve — live music, good friends, great memories. Let’s see in 2027 together!',
+      poster: 'new-years-eve',
+      tickets: { onSaleFrom: '2026-10-03' },
+    },
     { date: '2027-02-20', act: 'The Fabulous Remakes', blurb: '50s & 60s Jukebox Gold show', poster: 'the-remakes' },
     { date: '2027-03-20', act: 'Boo-Ga-Loo', blurb: 'Music of the sensational 70s — Wizzard, Slade, T Rex, Bay City Rollers, Sweet', poster: 'boo-ga-loo' },
     { date: '2027-05-22', act: 'Outatime', time: '9.00pm', blurb: '80s synth-pop tribute — Duran Duran, Pet Shop Boys, Erasure, Depeche Mode', poster: 'outatime' },
@@ -121,6 +171,31 @@ const dateFormatter = new Intl.DateTimeFormat('en-GB', {
 
 export function formatEventDate(iso: string) {
   return dateFormatter.format(new Date(`${iso}T00:00:00Z`))
+}
+
+const shortDateFormatter = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  timeZone: 'UTC',
+})
+
+export function formatShortDate(iso: string) {
+  return shortDateFormatter.format(new Date(`${iso}T00:00:00Z`))
+}
+
+/** Ticket badge text/urgency for an event, or null if it's pay on the door. */
+export function ticketStatus(event: EntertainmentEvent, now = new Date()) {
+  const tickets = event.tickets
+  if (!tickets) return null
+  const today = now.toISOString().slice(0, 10)
+  if (tickets.onSaleFrom && tickets.onSaleFrom > today) {
+    return { onSale: false as const, urgent: false, text: `Tickets on sale ${formatShortDate(tickets.onSaleFrom)}` }
+  }
+  return {
+    onSale: true as const,
+    urgent: Boolean(tickets.urgent),
+    text: tickets.availability ? `Tickets on sale now — ${tickets.availability}` : 'Tickets on sale now',
+  }
 }
 
 /** Upcoming events, soonest first. Falls back to the full list once every event is past. */

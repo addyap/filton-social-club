@@ -19,6 +19,7 @@ import {
   CoinIcon,
   StarIcon,
   DiscoIcon,
+  TicketIcon,
   SectionDivider,
 } from './components/Icons'
 import {
@@ -30,6 +31,8 @@ import {
   entertainmentCalendar,
   upcomingEvents,
   formatEventDate,
+  ticketStatus,
+  type EntertainmentEvent,
   skittles,
   summerSkittles,
   summerSkittlesFixtures,
@@ -97,6 +100,26 @@ const committeeRoles = [
   { label: 'Treasurer', value: committee.treasurer, Icon: CoinIcon },
   { label: 'Health & Safety', value: committee.healthAndSafety, Icon: ShieldIcon },
 ]
+
+/** Advance-ticket status pill for an entertainment event card. Renders nothing for pay-on-the-door nights. */
+function TicketBadge({ event }: { event: EntertainmentEvent }) {
+  const status = ticketStatus(event)
+  if (!status) return null
+  return (
+    <span
+      className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 font-semibold ${
+        status.urgent
+          ? 'bg-red-600/10 text-red-700'
+          : status.onSale
+            ? 'bg-emerald-600/10 text-emerald-700'
+            : 'bg-club-green/[0.06] text-club-green'
+      }`}
+    >
+      <TicketIcon className="h-4 w-4" />
+      {status.text}
+    </span>
+  )
+}
 
 function App() {
   const events = upcomingEvents()
@@ -213,6 +236,7 @@ function App() {
                       {featured.price}
                     </span>
                   )}
+                  <TicketBadge event={featured} />
                 </div>
               </div>
             </article>
@@ -260,6 +284,7 @@ function App() {
                             {event.price}
                           </span>
                         )}
+                        <TicketBadge event={event} />
                       </div>
                     </div>
                   </article>

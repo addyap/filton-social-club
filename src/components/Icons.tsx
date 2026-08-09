@@ -126,6 +126,18 @@ export function DiscoIcon({ className }: IconProps) {
   )
 }
 
+export function TicketIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className}>
+      <path
+        d="M3 9a2 2 0 0 0 0 4v3a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-3a2 2 0 0 1 0-4V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1z"
+        strokeLinejoin="round"
+      />
+      <path d="M14 5v14" strokeDasharray="2.2 2.2" strokeLinecap="round" />
+    </svg>
+  )
+}
+
 export function MegaphoneIcon({ className }: IconProps) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className}>
