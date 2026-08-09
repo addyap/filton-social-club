@@ -35,11 +35,8 @@ export function Footer() {
             &copy; {new Date().getFullYear()} {club.legalName}. Members only club. All are welcome to enquire about membership.
           </p>
           <p>
-            This website is provided for general informational purposes only. Opening hours, event dates, ticket
-            availability and prices are correct at the time of publishing but may change without notice — we make no
-            guarantees as to their accuracy and accept no liability for errors or for any reliance placed on this
-            content. Links to Facebook and other third-party sites are provided for convenience only; we have no
-            control over and accept no responsibility for their content.
+            This website is provided for general informational purposes only. Details are correct at the time of
+            publishing but may change without notice.
           </p>
         </div>
       </div>
