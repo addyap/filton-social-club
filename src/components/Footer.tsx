@@ -30,9 +30,18 @@ export function Footer() {
             </a>
           </div>
         </div>
-        <p className="mt-8 border-t border-white/10 pt-4 text-xs text-club-cream/60">
-          &copy; {new Date().getFullYear()} {club.legalName}. Members only club. All are welcome to enquire about membership.
-        </p>
+        <div className="mt-8 space-y-3 border-t border-white/10 pt-4 text-xs text-club-cream/60">
+          <p>
+            &copy; {new Date().getFullYear()} {club.legalName}. Members only club. All are welcome to enquire about membership.
+          </p>
+          <p>
+            This website is provided for general informational purposes only. Opening hours, event dates, ticket
+            availability and prices are correct at the time of publishing but may change without notice — we make no
+            guarantees as to their accuracy and accept no liability for errors or for any reliance placed on this
+            content. Links to Facebook and other third-party sites are provided for convenience only; we have no
+            control over and accept no responsibility for their content.
+          </p>
+        </div>
       </div>
     </footer>
   )
