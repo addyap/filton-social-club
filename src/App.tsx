@@ -2,7 +2,8 @@ import { Analytics } from '@vercel/analytics/react'
 import { Header } from './components/Header'
 import { Footer } from './components/Footer'
 import { Logo } from './components/Logo'
-import { NewsBanner } from './components/NewsBanner'
+import { EventTicker } from './components/EventTicker'
+import { EventsCalendar } from './components/EventsCalendar'
 import { SectionHeading } from './components/SectionHeading'
 import { Photo } from './components/Photo'
 import {
@@ -20,6 +21,7 @@ import {
   StarIcon,
   DiscoIcon,
   TicketIcon,
+  QuizIcon,
   SectionDivider,
 } from './components/Icons'
 import {
@@ -31,6 +33,7 @@ import {
   entertainmentCalendar,
   upcomingEvents,
   formatEventDate,
+  eventAnchor,
   ticketStatus,
   type EntertainmentEvent,
   skittles,
@@ -56,25 +59,7 @@ import membershipCard from './assets/img/membership-card.jpg'
 import membershipCardWebp from './assets/img/membership-card.webp'
 import summerSkittlesSheet from './assets/img/summer-skittles-fixtures.jpg'
 import summerSkittlesSheetWebp from './assets/img/summer-skittles-fixtures.webp'
-/* Posters are picked up automatically from src/assets/img/posters, so adding a
-   new act only means running the poster script and adding the event to club.ts. */
-const posterJpgs = import.meta.glob('./assets/img/posters/*.jpg', {
-  eager: true,
-  query: '?url',
-  import: 'default',
-}) as Record<string, string>
-const posterWebps = import.meta.glob('./assets/img/posters/*.webp', {
-  eager: true,
-  query: '?url',
-  import: 'default',
-}) as Record<string, string>
-
-function posterFor(name: string | undefined) {
-  if (!name) return undefined
-  const jpg = posterJpgs[`./assets/img/posters/${name}.jpg`]
-  const webp = posterWebps[`./assets/img/posters/${name}.webp`]
-  return jpg && webp ? { jpg, webp } : undefined
-}
+import { posterFor } from './posters'
 
 const gallery = [
   { src: functionRoomStage, webp: functionRoomStageWebp, alt: 'Function room with stage, dance floor and disco lighting' },
@@ -101,40 +86,57 @@ const committeeRoles = [
   { label: 'Health & Safety', value: committee.healthAndSafety, Icon: ShieldIcon },
 ]
 
-/** Advance-ticket status pill for an entertainment event card. Renders nothing for pay-on-the-door nights. */
-function TicketBadge({ event }: { event: EntertainmentEvent }) {
+/** Time, price, extra details and advance-ticket status for an event, as a row of pills. */
+function EventPills({ event, large }: { event: EntertainmentEvent; large?: boolean }) {
+  const pad = large ? 'px-3 py-1.5' : 'px-3 py-1'
+  const subtle = 'rounded-full bg-club-green/[0.06] font-semibold text-club-green'
   const status = ticketStatus(event)
-  if (!status) return null
+
   return (
-    <span
-      className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 font-semibold ${
-        status.urgent
-          ? 'bg-red-600/10 text-red-700'
-          : status.onSale
-            ? 'bg-emerald-600/10 text-emerald-700'
-            : 'bg-club-green/[0.06] text-club-green'
-      }`}
-    >
-      <TicketIcon className="h-4 w-4" />
-      {status.text}
-    </span>
+    <div className={`${large ? 'mt-5' : 'mt-4'} flex flex-wrap items-center gap-2 text-sm`}>
+      {event.time && (
+        <span className={`flex items-center gap-1.5 ${subtle} ${pad}`}>
+          <ClockIcon className="h-4 w-4 text-club-gold" />
+          {event.time}
+        </span>
+      )}
+      {event.price && (
+        <span className={`rounded-full bg-club-gold/15 font-semibold text-club-green-dark ${pad}`}>
+          {event.price}
+        </span>
+      )}
+      {event.details?.map((detail) => (
+        <span key={detail} className={`${subtle} ${pad}`}>
+          {detail}
+        </span>
+      ))}
+      {status && (
+        <span
+          className={`flex items-center gap-1.5 rounded-full font-semibold ${pad} ${
+            status.urgent
+              ? 'bg-red-600/10 text-red-700'
+              : status.onSale
+                ? 'bg-emerald-600/10 text-emerald-700'
+                : 'bg-club-green/[0.06] text-club-green'
+          }`}
+        >
+          <TicketIcon className="h-4 w-4" />
+          {status.text}
+        </span>
+      )}
+    </div>
   )
 }
 
 function App() {
-  const events = upcomingEvents()
-  const nextEvent = events[0]
-  const [featured, ...rest] = events
+  const [featured, ...rest] = upcomingEvents()
   const featuredPoster = posterFor(featured?.poster)
 
   return (
     <div id="top" className="min-h-screen">
       <Header />
 
-      <NewsBanner
-        message={`Next up: ${nextEvent.act} — ${formatEventDate(nextEvent.date)}`}
-        href="#entertainment"
-      />
+      <EventTicker />
 
       {/* Hero */}
       <section
@@ -199,7 +201,10 @@ function App() {
           </div>
 
           {featured && (
-            <article className="relative mx-auto mt-12 grid max-w-4xl gap-0 overflow-hidden rounded-2xl bg-club-cream shadow-2xl shadow-black/30 ring-2 ring-club-gold sm:grid-cols-2">
+            <article
+              id={eventAnchor(featured.date)}
+              className="relative mx-auto mt-12 grid max-w-4xl scroll-mt-32 gap-0 overflow-hidden rounded-2xl bg-club-cream shadow-2xl shadow-black/30 ring-2 ring-club-gold sm:grid-cols-2"
+            >
               <span className="absolute left-4 top-4 z-10 rounded-full bg-club-gold px-3 py-1 font-sans-ui text-xs font-bold uppercase tracking-wide text-club-green-dark shadow">
                 Next up
               </span>
@@ -213,7 +218,11 @@ function App() {
                 />
               ) : (
                 <div className="flex items-center justify-center bg-gradient-to-br from-club-green to-club-green-dark p-10">
-                  <MusicNoteIcon className="h-20 w-20 text-club-gold/50" />
+                  {featured.kind === 'quiz' ? (
+                    <QuizIcon className="h-20 w-20 text-club-gold/50" />
+                  ) : (
+                    <MusicNoteIcon className="h-20 w-20 text-club-gold/50" />
+                  )}
                 </div>
               )}
               <div className="flex flex-col justify-center p-6 font-sans-ui sm:p-8">
@@ -224,20 +233,7 @@ function App() {
                 {featured.blurb && (
                   <p className="mt-3 text-sm leading-relaxed text-gray-700">{featured.blurb}</p>
                 )}
-                <div className="mt-5 flex flex-wrap items-center gap-2 text-sm">
-                  {featured.time && (
-                    <span className="flex items-center gap-1.5 rounded-full bg-club-green/[0.06] px-3 py-1.5 font-semibold text-club-green">
-                      <ClockIcon className="h-4 w-4 text-club-gold" />
-                      {featured.time}
-                    </span>
-                  )}
-                  {featured.price && (
-                    <span className="rounded-full bg-club-gold/15 px-3 py-1.5 font-semibold text-club-green-dark">
-                      {featured.price}
-                    </span>
-                  )}
-                  <TicketBadge event={featured} />
-                </div>
+                <EventPills event={featured} large />
               </div>
             </article>
           )}
@@ -249,7 +245,8 @@ function App() {
                 return (
                   <article
                     key={event.date}
-                    className="flex flex-col overflow-hidden rounded-xl bg-club-cream shadow-md ring-1 ring-club-gold/20 transition hover:-translate-y-1 hover:shadow-xl"
+                    id={eventAnchor(event.date)}
+                    className="flex scroll-mt-32 flex-col overflow-hidden rounded-xl bg-club-cream shadow-md ring-1 ring-club-gold/20 transition hover:-translate-y-1 hover:shadow-xl target:ring-2 target:ring-club-gold"
                   >
                     {poster ? (
                       <Photo
@@ -260,7 +257,11 @@ function App() {
                       />
                     ) : (
                       <div className="flex aspect-[3/4] items-center justify-center bg-gradient-to-br from-club-green to-club-green-dark">
-                        <MusicNoteIcon className="h-16 w-16 text-club-gold/50" />
+                        {event.kind === 'quiz' ? (
+                          <QuizIcon className="h-16 w-16 text-club-gold/50" />
+                        ) : (
+                          <MusicNoteIcon className="h-16 w-16 text-club-gold/50" />
+                        )}
                       </div>
                     )}
 
@@ -272,20 +273,7 @@ function App() {
                       {event.blurb && (
                         <p className="mt-2 text-sm leading-relaxed text-gray-700">{event.blurb}</p>
                       )}
-                      <div className="mt-4 flex flex-wrap items-center gap-2 text-sm">
-                        {event.time && (
-                          <span className="flex items-center gap-1.5 rounded-full bg-club-green/[0.06] px-3 py-1 font-semibold text-club-green">
-                            <ClockIcon className="h-4 w-4 text-club-gold" />
-                            {event.time}
-                          </span>
-                        )}
-                        {event.price && (
-                          <span className="rounded-full bg-club-gold/15 px-3 py-1 font-semibold text-club-green-dark">
-                            {event.price}
-                          </span>
-                        )}
-                        <TicketBadge event={event} />
-                      </div>
+                      <EventPills event={event} />
                     </div>
                   </article>
                 )
@@ -294,6 +282,10 @@ function App() {
           )}
         </div>
       </section>
+
+      <SectionDivider />
+
+      <EventsCalendar />
 
       <SectionDivider />
 

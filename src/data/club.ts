@@ -82,6 +82,10 @@ export type EntertainmentEvent = {
   blurb?: string
   /** Matches a `name` in scripts/process-performers.mjs. */
   poster?: string
+  /** Defaults to a live act; 'quiz' styles the card as a quiz night rather than a band. */
+  kind?: 'music' | 'quiz'
+  /** Extra facts shown as pills — used by the quiz for team size, prizes and the raffle. */
+  details?: string[]
   /** Set only for advance-ticket shows — the regular Saturday nights are pay on the door. */
   tickets?: {
     /** ISO date sales open. Omit once already on sale. */
@@ -107,8 +111,45 @@ export const entertainmentCalendar = {
     { date: '2026-08-01', act: 'Guy Young', price: '£5', time: '8.45pm', blurb: 'Pop, rock, soul and reggae', poster: 'guy-young' },
     { date: '2026-08-08', act: 'Rowland', price: '£5', time: '9.00pm', poster: 'rowland' },
     { date: '2026-08-15', act: 'Mark Godfrey', price: '£5', time: '9.00pm', blurb: 'Rock, pop, country, reggae, ska, Motown and Northern Soul', poster: 'mark-godfrey' },
-    { date: '2026-08-22', act: 'Dresdens', price: '£5' },
-    { date: '2026-08-29', act: 'Ryan Mills', price: '£5' },
+    { date: '2026-08-22', act: 'Dresdens', price: '£5', poster: 'dresdens' },
+    { date: '2026-08-29', act: 'Ryan Mills', price: '£5', blurb: 'Vocal entertainer, performing live', poster: 'ryan-mills' },
+    {
+      date: '2026-09-05',
+      act: 'Deja Two',
+      time: '9.00pm',
+      blurb: 'A broad range of music, from the 60s to the present day',
+      poster: 'deja-two',
+    },
+    {
+      date: '2026-09-11',
+      act: 'Quiz Night',
+      kind: 'quiz',
+      time: '7.30pm for an 8.00pm start',
+      price: '£1 per player',
+      blurb: 'Finishes around 10.30pm. Open to members and non-members alike.',
+      details: ['Teams of up to 5', 'Cash prize for the winners', 'Raffle on the night'],
+      poster: 'quiz-night',
+    },
+    {
+      date: '2026-09-12',
+      act: 'Brendan & Kayleigh-Jo',
+      blurb: 'Of 7th Stranger — rock, pop, rock ’n’ roll, reggae, country, ballads, duets and medleys',
+      poster: 'brendan-kayleigh-jo',
+    },
+    {
+      date: '2026-09-19',
+      act: 'Dean Oliver',
+      time: '9.00pm',
+      blurb: 'Solo singer — rock, rock ’n’ roll, pop and reggae, from the 50s to the present day',
+      poster: 'dean-oliver',
+    },
+    {
+      date: '2026-09-26',
+      act: 'Beth Amis',
+      time: '9.00pm',
+      blurb: 'Live vocalist, singing the classics from the 60s to current',
+      poster: 'beth-amis',
+    },
     {
       date: '2026-10-10',
       act: 'The New Jersey Boys',
@@ -204,6 +245,45 @@ export function upcomingEvents(now = new Date()): EntertainmentEvent[] {
   const sorted = [...entertainmentCalendar.events].sort((a, b) => a.date.localeCompare(b.date))
   const upcoming = sorted.filter((e) => e.date >= today)
   return upcoming.length > 0 ? upcoming : sorted
+}
+
+/** Anchor id for an event's card, so the ticker can jump straight to its poster. */
+export function eventAnchor(iso: string) {
+  return `event-${iso}`
+}
+
+const monthFormatter = new Intl.DateTimeFormat('en-GB', {
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC',
+})
+
+const dayFormatter = new Intl.DateTimeFormat('en-GB', {
+  weekday: 'short',
+  day: 'numeric',
+  timeZone: 'UTC',
+})
+
+/** "August 2026" — the ticker's month divider. */
+export function formatEventMonth(iso: string) {
+  return monthFormatter.format(new Date(`${iso}T00:00:00Z`))
+}
+
+/** "Sat 22" — compact enough for a scrolling ticker. */
+export function formatEventDay(iso: string) {
+  return dayFormatter.format(new Date(`${iso}T00:00:00Z`))
+}
+
+/** Upcoming events bucketed into consecutive months, for the ticker. */
+export function eventsByMonth(now = new Date()) {
+  const groups: { month: string; events: EntertainmentEvent[] }[] = []
+  for (const event of upcomingEvents(now)) {
+    const month = formatEventMonth(event.date)
+    const current = groups.at(-1)
+    if (current?.month === month) current.events.push(event)
+    else groups.push({ month, events: [event] })
+  }
+  return groups
 }
 
 export const skittles = {

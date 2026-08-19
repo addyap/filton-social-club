@@ -26,3 +26,35 @@ body {
   background-image: radial-gradient(currentColor 1px, transparent 1px);
   background-size: 20px 20px;
 }
+
+/* Events ticker. The track holds two identical copies of the run of events, so
+   sliding it exactly half its width lands back on an identical frame and the
+   loop is seamless. */
+@keyframes ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.ticker-track {
+  animation: ticker-scroll var(--ticker-duration, 80s) linear infinite;
+}
+
+.ticker-viewport:hover .ticker-track,
+.ticker-viewport:focus-within .ticker-track {
+  animation-play-state: paused;
+}
+
+/* No motion: drop the animation and let the reader scroll the run by hand. */
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none;
+  }
+
+  .ticker-viewport {
+    overflow-x: auto;
+  }
+}

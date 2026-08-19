@@ -6,6 +6,7 @@ import { MenuIcon, CloseIcon } from './Icons'
 const navLinks = [
   { href: '#whats-on', label: "What's On" },
   { href: '#entertainment', label: 'Entertainment' },
+  { href: '#calendar', label: 'Calendar' },
   { href: '#skittles', label: 'Skittles' },
   { href: '#room-hire', label: 'Room Hire' },
   { href: '#membership', label: 'Membership' },

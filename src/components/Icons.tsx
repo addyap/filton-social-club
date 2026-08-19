@@ -126,6 +126,16 @@ export function DiscoIcon({ className }: IconProps) {
   )
 }
 
+export function QuizIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M9.4 9.3a2.7 2.7 0 0 1 5.2.9c0 1.8-2.6 2.3-2.6 3.8" strokeLinecap="round" />
+      <path d="M12 17.2h.01" strokeLinecap="round" />
+    </svg>
+  )
+}
+
 export function TicketIcon({ className }: IconProps) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className}>
