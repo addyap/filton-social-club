@@ -5,7 +5,7 @@ import {
   formatEventDate,
   type EntertainmentEvent,
 } from '../data/club'
-import { MusicNoteIcon, QuizIcon } from './Icons'
+import { DiscoIcon, MusicNoteIcon, QuizIcon } from './Icons'
 
 /** One month's worth of events, led by a dark month chip. */
 function MonthRun({ month, events }: { month: string; events: EntertainmentEvent[] }) {
@@ -58,17 +58,35 @@ export function EventTicker() {
 
   return (
     <section
-      aria-label="Upcoming events"
-      className="ticker-viewport relative overflow-hidden border-y-2 border-club-gold/40 bg-club-gold font-sans-ui text-sm sm:text-base"
+      aria-label="Upcoming entertainment"
+      className="relative flex items-stretch border-y-2 border-club-gold/40 bg-club-gold font-sans-ui text-sm sm:text-base"
     >
-      <div className="ticker-track flex w-max py-2.5" style={{ '--ticker-duration': duration } as React.CSSProperties}>
-        {run}
-        {/* Second copy makes the wrap seamless; hidden from screen readers. */}
-        <div aria-hidden="true" className="flex w-max items-center">
-          {months.map((group) => (
-            <MonthRun key={`dup-${group.month}`} month={group.month} events={group.events} />
-          ))}
+      {/* Pinned title — sits outside the scrolling viewport so it stays put. */}
+      {/* Tracking and padding stay tight on phones so the label can't crowd out
+          the events themselves. */}
+      <h2 className="z-10 flex shrink-0 items-center gap-1.5 bg-club-green-dark px-2.5 py-2.5 text-[10px] font-bold uppercase tracking-normal text-club-gold shadow-md sm:gap-2 sm:px-5 sm:text-sm sm:tracking-[0.16em]">
+        <DiscoIcon className="h-3.5 w-3.5 shrink-0 sm:h-5 sm:w-5" />
+        Entertainment
+      </h2>
+
+      <div className="ticker-viewport relative flex-1 overflow-hidden">
+        <div
+          className="ticker-track flex w-max py-2.5"
+          style={{ '--ticker-duration': duration } as React.CSSProperties}
+        >
+          {run}
+          {/* Second copy makes the wrap seamless; hidden from screen readers. */}
+          <div aria-hidden="true" className="flex w-max items-center">
+            {months.map((group) => (
+              <MonthRun key={`dup-${group.month}`} month={group.month} events={group.events} />
+            ))}
+          </div>
         </div>
+        {/* Soft fade at the trailing edge, so events slide out rather than snap. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-club-gold to-transparent"
+        />
       </div>
     </section>
   )
