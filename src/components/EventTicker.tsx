@@ -61,10 +61,10 @@ export function EventTicker() {
       aria-label="Upcoming entertainment"
       className="relative flex items-stretch border-y-2 border-club-gold/40 bg-club-gold font-sans-ui text-sm sm:text-base"
     >
-      {/* Pinned title — sits outside the scrolling viewport so it stays put. */}
-      {/* Quiet label — sits on the gold band itself with just a hairline rule,
-          so it names the strip without competing with the events. */}
-      <h2 className="z-10 flex shrink-0 items-center border-r border-club-green-dark/15 px-3 py-2.5 text-[9px] font-semibold uppercase tracking-wide text-club-green-dark/60 sm:px-4 sm:text-[11px]">
+      {/* Pinned title — sits outside the scrolling viewport so it stays put.
+          Weight and the serif (the headings' face, against the sans-serif event
+          list) give it presence, rather than a loud block would. */}
+      <h2 className="z-10 flex shrink-0 items-center border-r border-club-green-dark/20 px-3 py-2.5 font-serif text-[10px] font-bold uppercase tracking-normal text-club-green-dark/85 sm:px-5 sm:text-[13px] sm:tracking-wider">
         Entertainment
       </h2>
 
