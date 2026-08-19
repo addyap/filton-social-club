@@ -1,0 +1,122 @@
+{
+  "bar-taps": [
+    1600,
+    900
+  ],
+  "bar-wide": [
+    1600,
+    900
+  ],
+  "fruit-machines": [
+    1600,
+    900
+  ],
+  "function-room-stage": [
+    1600,
+    900
+  ],
+  "logo": [
+    1024,
+    1024
+  ],
+  "logo-192": [
+    192,
+    192
+  ],
+  "logo-512": [
+    512,
+    512
+  ],
+  "membership-card": [
+    1600,
+    900
+  ],
+  "pool-table-stage": [
+    1600,
+    900
+  ],
+  "posters/abbaholics": [
+    900,
+    900
+  ],
+  "posters/beth-amis": [
+    900,
+    1198
+  ],
+  "posters/boo-ga-loo": [
+    533,
+    733
+  ],
+  "posters/brendan-kayleigh-jo": [
+    900,
+    1304
+  ],
+  "posters/dean-oliver": [
+    900,
+    1274
+  ],
+  "posters/deja-two": [
+    900,
+    1350
+  ],
+  "posters/dresdens": [
+    900,
+    1191
+  ],
+  "posters/guy-young": [
+    900,
+    1273
+  ],
+  "posters/lucciano-frankie": [
+    900,
+    1350
+  ],
+  "posters/mark-godfrey": [
+    900,
+    900
+  ],
+  "posters/new-jersey-boys": [
+    533,
+    743
+  ],
+  "posters/new-years-eve": [
+    900,
+    1274
+  ],
+  "posters/outatime": [
+    620,
+    775
+  ],
+  "posters/quiz-night": [
+    900,
+    1272
+  ],
+  "posters/rowland": [
+    900,
+    1350
+  ],
+  "posters/ryan-mills": [
+    704,
+    1268
+  ],
+  "posters/the-remakes": [
+    492,
+    735
+  ],
+  "posters/top-of-the-pops-xmas": [
+    900,
+    1274
+  ],
+  "small-bar-corner": [
+    1600,
+    900
+  ],
+  "spirits-shelf": [
+    1600,
+    900
+  ],
+  "summer-skittles-fixtures": [
+    900,
+    1479
+  ]
+}

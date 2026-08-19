@@ -4,6 +4,7 @@ import { Footer } from './components/Footer'
 import { Logo } from './components/Logo'
 import { EventTicker } from './components/EventTicker'
 import { EventsCalendar } from './components/EventsCalendar'
+import { StructuredData } from './components/StructuredData'
 import { SectionHeading } from './components/SectionHeading'
 import { Photo } from './components/Photo'
 import {
@@ -61,15 +62,16 @@ import membershipCard from './assets/img/membership-card.jpg'
 import membershipCardWebp from './assets/img/membership-card.webp'
 import summerSkittlesSheet from './assets/img/summer-skittles-fixtures.jpg'
 import summerSkittlesSheetWebp from './assets/img/summer-skittles-fixtures.webp'
-import { posterFor } from './posters'
+import { posterFor, sizeOf } from './posters'
 
+// `name` matches the filename stem in src/assets/img/dimensions.json.
 const gallery = [
-  { src: functionRoomStage, webp: functionRoomStageWebp, alt: 'Function room with stage, dance floor and disco lighting' },
-  { src: poolTableStage, webp: poolTableStageWebp, alt: 'Pool table with the stage and dance floor behind' },
-  { src: barWide, webp: barWideWebp, alt: 'The club bar' },
-  { src: spiritsShelf, webp: spiritsShelfWebp, alt: 'Spirits shelf behind the bar' },
-  { src: fruitMachines, webp: fruitMachinesWebp, alt: 'Fruit machines' },
-  { src: smallBarCorner, webp: smallBarCornerWebp, alt: 'The small bar, with boxing memorabilia on the wall' },
+  { name: 'function-room-stage', src: functionRoomStage, webp: functionRoomStageWebp, alt: 'Function room with stage, dance floor and disco lighting' },
+  { name: 'pool-table-stage', src: poolTableStage, webp: poolTableStageWebp, alt: 'Pool table with the stage and dance floor behind' },
+  { name: 'bar-wide', src: barWide, webp: barWideWebp, alt: 'The club bar' },
+  { name: 'spirits-shelf', src: spiritsShelf, webp: spiritsShelfWebp, alt: 'Spirits shelf behind the bar' },
+  { name: 'fruit-machines', src: fruitMachines, webp: fruitMachinesWebp, alt: 'Fruit machines' },
+  { name: 'small-bar-corner', src: smallBarCorner, webp: smallBarCornerWebp, alt: 'The small bar, with boxing memorabilia on the wall' },
 ]
 
 
@@ -136,9 +138,17 @@ function App() {
 
   return (
     <div id="top" className="min-h-screen">
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-club-gold focus:px-5 focus:py-3 focus:font-sans-ui focus:text-sm focus:font-bold focus:text-club-green-dark"
+      >
+        Skip to content
+      </a>
       <Header />
 
       <EventTicker />
+
+      <main id="main">
 
       {/* Hero */}
       <section
@@ -214,6 +224,8 @@ function App() {
                 <Photo
                   jpg={featuredPoster.jpg}
                   webp={featuredPoster.webp}
+                  width={featuredPoster.width}
+                  height={featuredPoster.height}
                   alt={`Poster for ${featured.act} at Filton & District Social Club`}
                   className="h-full w-full object-cover"
                   loading="eager"
@@ -254,6 +266,8 @@ function App() {
                       <Photo
                         jpg={poster.jpg}
                         webp={poster.webp}
+                        width={poster.width}
+                        height={poster.height}
                         alt={`Poster for ${event.act} at Filton & District Social Club`}
                         className="w-full"
                       />
@@ -468,6 +482,7 @@ function App() {
                 <Photo
                   jpg={barTaps}
                   webp={barTapsWebp}
+                  {...sizeOf('bar-taps')}
                   alt="Real ale, stout, cider and lager taps at the bar"
                   className="h-48 w-full object-cover transition duration-500 group-hover:scale-105"
                 />
@@ -545,6 +560,7 @@ function App() {
           <Photo
             jpg={membershipCard}
             webp={membershipCardWebp}
+            {...sizeOf('membership-card')}
             alt="Filton & District Social Club membership card"
             className="mx-auto h-40 w-auto rotate-2 rounded-lg border border-club-green/10 object-cover shadow-md transition duration-300 hover:rotate-0 hover:shadow-lg sm:h-48"
           />
@@ -564,6 +580,7 @@ function App() {
                 <Photo
                   jpg={photo.src}
                   webp={photo.webp}
+                  {...sizeOf(photo.name)}
                   alt={photo.alt}
                   className="h-full w-full object-cover transition duration-500 group-hover:scale-110"
                 />
@@ -691,7 +708,10 @@ function App() {
         </div>
       </section>
 
+      </main>
+
       <Footer />
+      <StructuredData />
       <Analytics />
     </div>
   )

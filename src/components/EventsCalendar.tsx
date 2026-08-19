@@ -253,6 +253,8 @@ export function EventsCalendar() {
                     <Photo
                       jpg={poster.jpg}
                       webp={poster.webp}
+                      width={poster.width}
+                      height={poster.height}
                       alt={`Poster for ${event.act}`}
                       className="h-16 w-12 shrink-0 rounded object-cover shadow-sm ring-1 ring-club-green/10"
                     />
