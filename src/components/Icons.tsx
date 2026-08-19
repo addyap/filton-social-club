@@ -126,6 +126,17 @@ export function DiscoIcon({ className }: IconProps) {
   )
 }
 
+export function PhoneIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className}>
+      <path
+        d="M6.6 3.5h3l1.5 3.8-2 1.4a11.6 11.6 0 0 0 5.2 5.2l1.4-2 3.8 1.5v3a1.6 1.6 0 0 1-1.7 1.6A15.6 15.6 0 0 1 5 5.2 1.6 1.6 0 0 1 6.6 3.5z"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
 export function QuizIcon({ className }: IconProps) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className}>

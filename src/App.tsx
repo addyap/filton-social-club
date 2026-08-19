@@ -14,6 +14,7 @@ import {
   CheckCircleIcon,
   ClockIcon,
   MapPinIcon,
+  PhoneIcon,
   CrownIcon,
   ShieldIcon,
   ClipboardIcon,
@@ -26,6 +27,7 @@ import {
 } from './components/Icons'
 import {
   club,
+  clubPhoneHref,
   openingHours,
   committee,
   whatsOn,
@@ -444,7 +446,11 @@ function App() {
               ))}
             </ul>
             <p className="mt-6 font-sans-ui text-sm text-gray-700">
-              Looking to hire a room for a party, celebration or wake? Get in touch via our{' '}
+              Looking to hire a room for a party, celebration or wake? Give us a ring on{' '}
+              <a href={clubPhoneHref} className="font-semibold text-club-green underline">
+                {club.phone}
+              </a>
+              , get in touch via our{' '}
               <a
                 href={club.facebookUrl}
                 target="_blank"
@@ -452,8 +458,8 @@ function App() {
                 className="font-semibold text-club-green underline"
               >
                 Facebook group
-              </a>{' '}
-              or ask a committee member at the club.
+              </a>
+              , or ask a committee member at the club.
             </p>
           </div>
           <div className="flex flex-col gap-6">
@@ -642,17 +648,33 @@ function App() {
             <p className="font-sans-ui text-club-cream/90">
               {club.address.line1}, {club.address.town}, {club.address.city} {club.address.postcode}
             </p>
+            <a
+              href={clubPhoneHref}
+              className="mt-3 inline-flex items-center gap-2 font-sans-ui text-lg font-bold text-club-gold transition hover:brightness-110"
+            >
+              <PhoneIcon className="h-5 w-5" />
+              {club.phone}
+            </a>
             <p className="mt-2 font-sans-ui text-sm text-club-cream/70">
               Please respect our neighbours when leaving the premises.
             </p>
-            <a
-              href={club.facebookUrl}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="mt-6 inline-block rounded-full bg-club-gold px-6 py-3 font-sans-ui text-sm font-semibold text-club-green-dark shadow-lg shadow-club-gold/20 transition hover:-translate-y-0.5 hover:brightness-105 active:translate-y-0"
-            >
-              Message us on Facebook
-            </a>
+            <div className="mt-6 flex flex-wrap justify-center gap-3 sm:justify-start">
+              <a
+                href={clubPhoneHref}
+                className="inline-flex items-center gap-2 rounded-full bg-club-gold px-6 py-3 font-sans-ui text-sm font-semibold text-club-green-dark shadow-lg shadow-club-gold/20 transition hover:-translate-y-0.5 hover:brightness-105 active:translate-y-0"
+              >
+                <PhoneIcon className="h-4 w-4" />
+                Call the club
+              </a>
+              <a
+                href={club.facebookUrl}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="inline-block rounded-full border border-club-cream/50 px-6 py-3 font-sans-ui text-sm font-semibold text-club-cream transition hover:-translate-y-0.5 hover:bg-white/10 active:translate-y-0"
+              >
+                Message us on Facebook
+              </a>
+            </div>
           </div>
           <div className="h-72 w-full overflow-hidden rounded-xl border border-club-cream/20 shadow-lg sm:h-80">
             <iframe

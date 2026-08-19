@@ -7,8 +7,12 @@ export const club = {
     city: 'Bristol',
     postcode: 'BS34 7HZ',
   },
+  phone: '0117 969 2934',
   facebookUrl: 'https://www.facebook.com/groups/211406802585294/about?locale=en_GB',
 }
+
+/** The club number with the spaces stripped, for tel: links. */
+export const clubPhoneHref = `tel:${club.phone.replace(/\s+/g, '')}`
 
 export const openingHours = [
   { period: 'Lunchtime', rows: [{ days: 'Mon to Thu', hours: '1.00pm – 5.00pm' }] },

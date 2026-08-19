@@ -1,6 +1,6 @@
-import { club } from '../data/club'
+import { club, clubPhoneHref } from '../data/club'
 import { Logo } from './Logo'
-import { MapPinIcon } from './Icons'
+import { MapPinIcon, PhoneIcon } from './Icons'
 
 export function Footer() {
   return (
@@ -16,6 +16,10 @@ export function Footer() {
                 <MapPinIcon className="h-3.5 w-3.5 text-club-gold" />
                 {club.address.line1}, {club.address.town}, {club.address.city} {club.address.postcode}
               </p>
+              <a href={clubPhoneHref} className="mt-1 flex items-center gap-1.5 hover:text-club-gold">
+                <PhoneIcon className="h-3.5 w-3.5 text-club-gold" />
+                {club.phone}
+              </a>
             </div>
           </div>
           <div>
