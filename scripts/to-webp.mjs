@@ -2,13 +2,32 @@ import sharp from 'sharp'
 import { readdir } from 'node:fs/promises'
 import path from 'node:path'
 
-const dir = path.resolve(import.meta.dirname, '../src/assets/img')
+// Regenerates a .webp alongside every .jpg we ship, including the posters
+// folder. Every current browser takes the WebP, so this is what visitors
+// actually download — the .jpg is only a fallback.
+//
+//   node scripts/to-webp.mjs
+//
+// Quality 76 at effort 6: the extra effort costs encoder time at build only,
+// and buys roughly a third off the file for no visible difference. Posters are
+// full of text, which smears before photos do, so this isn't pushed lower.
+// Keep in step with the same settings in process-performers.mjs.
+const WEBP = { quality: 76, effort: 6 }
 
-const files = (await readdir(dir)).filter((f) => f.endsWith('.jpg'))
+const root = path.resolve(import.meta.dirname, '../src/assets/img')
 
-for (const file of files) {
-  const input = path.join(dir, file)
-  const output = path.join(dir, file.replace(/\.jpg$/, '.webp'))
-  await sharp(input).webp({ quality: 78 }).toFile(output)
-  console.log(`${file} -> ${path.basename(output)}`)
+async function convert(dir) {
+  for (const entry of await readdir(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name)
+    if (entry.isDirectory()) {
+      await convert(full)
+      continue
+    }
+    if (!entry.name.endsWith('.jpg')) continue
+
+    await sharp(full).webp(WEBP).toFile(full.replace(/\.jpg$/, '.webp'))
+    console.log(path.relative(root, full))
+  }
 }
+
+await convert(root)

@@ -80,7 +80,10 @@ for (const job of jobs) {
 
   const dest = job.dir === 'img' ? imgDir : posterDir
   const base = img.resize({ width: 900, withoutEnlargement: true })
+  // The .jpg stays high quality — it's the archive copy these are re-encoded
+  // from. The .webp is what visitors actually download; keep its settings in
+  // step with to-webp.mjs.
   await base.clone().jpeg({ quality: 88 }).toFile(path.join(dest, `${job.name}.jpg`))
-  await base.clone().webp({ quality: 88 }).toFile(path.join(dest, `${job.name}.webp`))
+  await base.clone().webp({ quality: 76, effort: 6 }).toFile(path.join(dest, `${job.name}.webp`))
   console.log(job.name, 'done')
 }
