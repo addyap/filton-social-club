@@ -1,6 +1,38 @@
-import { club, openingHours, upcomingEvents, entertainmentCalendar } from '../data/club'
+import { club, openingHours, upcomingEvents, eventAnchor, type EntertainmentEvent } from '../data/club'
+import { posterFor } from '../posters'
 
 const SITE = 'https://www.filtonsocialclub.co.uk'
+
+/**
+ * "9.00pm" -> "21:00". Takes the first time in the string, so a value like
+ * "7.30pm for an 8.00pm start" resolves to the doors time.
+ */
+function toStartTime(time: string | undefined): string | null {
+  const m = time?.match(/(\d{1,2})[.:](\d{2})\s*(am|pm)/i)
+  if (!m) return null
+  let hour = Number(m[1]) % 12
+  if (/pm/i.test(m[3])) hour += 12
+  return `${String(hour).padStart(2, '0')}:${m[2]}`
+}
+
+/**
+ * schema.org wants an ISO 8601 datetime. Written without a UTC offset, which
+ * schema.org reads as local time at the venue — the club's events span BST and
+ * GMT, so a fixed offset would be wrong for half the calendar.
+ */
+function eventStart(event: EntertainmentEvent): string {
+  const time = toStartTime(event.time)
+  return time ? `${event.date}T${time}` : event.date
+}
+
+/**
+ * Advance-ticket shows aren't buyable until sales open; everything else is pay
+ * on the door, so it's available now.
+ */
+function onSale(event: EntertainmentEvent, now = new Date()): boolean {
+  const from = event.tickets?.onSaleFrom
+  return !from || from <= now.toISOString().slice(0, 10)
+}
 
 /** "1.00pm – 5.00pm" -> ["13:00", "17:00"] for schema.org's 24h opening hours. */
 function toIsoTimes(range: string): [string, string] | null {
@@ -56,6 +88,7 @@ export function StructuredData() {
   const venue = {
     '@type': 'Place',
     name: club.legalName,
+    url: SITE,
     address: {
       '@type': 'PostalAddress',
       streetAddress: club.address.line1,
@@ -67,6 +100,14 @@ export function StructuredData() {
   }
 
   const graph = [
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE}/#website`,
+      url: SITE,
+      name: club.name,
+      inLanguage: 'en-GB',
+      publisher: { '@id': `${SITE}/#club` },
+    },
     {
       '@type': ['NightClub', 'LocalBusiness'],
       '@id': `${SITE}/#club`,
@@ -83,27 +124,44 @@ export function StructuredData() {
       openingHoursSpecification: openingSpecs(),
       publicAccess: false,
     },
-    ...upcomingEvents().map((event) => ({
-      '@type': 'Event',
-      name: event.act,
-      startDate: event.date,
-      eventStatus: 'https://schema.org/EventScheduled',
-      eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-      description: event.blurb ?? entertainmentCalendar.note,
-      location: venue,
-      organizer: { '@type': 'Organization', name: club.name, url: SITE },
-      ...(event.price
-        ? {
-            offers: {
-              '@type': 'Offer',
-              price: event.price.replace(/[^\d.]/g, ''),
-              priceCurrency: 'GBP',
-              availability: 'https://schema.org/InStock',
-              url: SITE,
-            },
-          }
-        : {}),
-    })),
+    ...upcomingEvents().map((event) => {
+      const poster = posterFor(event.poster)
+      const isQuiz = event.kind === 'quiz'
+      const url = `${SITE}/#${eventAnchor(event.date)}`
+
+      return {
+        '@type': 'Event',
+        '@id': url,
+        name: event.act,
+        url,
+        startDate: eventStart(event),
+        eventStatus: 'https://schema.org/EventScheduled',
+        eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+        description:
+          event.blurb ??
+          (isQuiz ? `Quiz night at ${club.name}.` : `Live entertainment from ${event.act} at ${club.name}.`),
+        location: venue,
+        organizer: { '@type': 'Organization', name: club.name, url: SITE },
+        // The poster is what Google shows alongside an event rich result.
+        ...(poster ? { image: `${SITE}${poster.jpg}` } : {}),
+        ...(isQuiz ? {} : { performer: { '@type': 'PerformingGroup', name: event.act } }),
+        ...(event.price
+          ? {
+              isAccessibleForFree: false,
+              offers: {
+                '@type': 'Offer',
+                price: event.price.replace(/[^\d.]/g, ''),
+                priceCurrency: 'GBP',
+                url,
+                availability: onSale(event)
+                  ? 'https://schema.org/InStock'
+                  : 'https://schema.org/PreOrder',
+                ...(event.tickets?.onSaleFrom ? { validFrom: event.tickets.onSaleFrom } : {}),
+              },
+            }
+          : {}),
+      }
+    }),
   ]
 
   return (
