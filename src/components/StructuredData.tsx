@@ -97,6 +97,7 @@ export function StructuredData() {
       postalCode: club.address.postcode,
       addressCountry: 'GB',
     },
+    geo: { '@type': 'GeoCoordinates', ...club.geo },
   }
 
   const graph = [
@@ -120,7 +121,9 @@ export function StructuredData() {
       description:
         "A friendly members' club in Filton, Bristol — live sport, Saturday night entertainment, bingo, skittle teams, room hire and a dog-friendly bar.",
       address: venue.address,
-      sameAs: [club.facebookUrl],
+      geo: venue.geo,
+      hasMap: club.googleMapsUrl,
+      sameAs: [club.facebookUrl, club.googleMapsUrl],
       openingHoursSpecification: openingSpecs(),
       publicAccess: false,
     },

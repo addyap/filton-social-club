@@ -9,6 +9,10 @@ export const club = {
   },
   phone: '0117 969 2934',
   facebookUrl: 'https://www.facebook.com/groups/211406802585294/about?locale=en_GB',
+  /** Taken from the club's own Google Maps listing (the marker, not the map centre). */
+  geo: { latitude: 51.5084313, longitude: -2.5618756 },
+  /** Short, stable link to that listing — the long /maps/place/ URL carries session junk. */
+  googleMapsUrl: 'https://maps.google.com/?cid=13803555672016475925',
 }
 
 /** The club number with the spaces stripped, for tel: links. */
