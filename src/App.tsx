@@ -44,6 +44,7 @@ import {
   summerSkittlesFixtures,
   bar,
 } from './data/club'
+import { useToday } from './today'
 import functionRoomStage from './assets/img/function-room-stage.jpg'
 import functionRoomStageWebp from './assets/img/function-room-stage.webp'
 import poolTableStage from './assets/img/pool-table-stage.jpg'
@@ -94,7 +95,7 @@ const committeeRoles = [
 function EventPills({ event, large }: { event: EntertainmentEvent; large?: boolean }) {
   const pad = large ? 'px-3 py-1.5' : 'px-3 py-1'
   const subtle = 'rounded-full bg-club-green/[0.06] font-semibold text-club-green'
-  const status = ticketStatus(event)
+  const status = ticketStatus(event, useToday())
 
   return (
     <div className={`${large ? 'mt-5' : 'mt-4'} flex flex-wrap items-center gap-2 text-sm`}>
@@ -133,7 +134,7 @@ function EventPills({ event, large }: { event: EntertainmentEvent; large?: boole
 }
 
 function App() {
-  const [featured, ...rest] = upcomingEvents()
+  const [featured, ...rest] = upcomingEvents(useToday())
   const featuredPoster = posterFor(featured?.poster)
 
   return (

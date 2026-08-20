@@ -1,5 +1,6 @@
 import { club, openingHours, upcomingEvents, eventAnchor, type EntertainmentEvent } from '../data/club'
 import { posterFor } from '../posters'
+import { useToday } from '../today'
 
 const SITE = 'https://www.filtonsocialclub.co.uk'
 
@@ -85,6 +86,7 @@ function openingSpecs() {
  * the page renders, so it can't drift out of sync.
  */
 export function StructuredData() {
+  const today = useToday()
   const venue = {
     '@type': 'Place',
     name: club.legalName,
@@ -127,7 +129,7 @@ export function StructuredData() {
       openingHoursSpecification: openingSpecs(),
       publicAccess: false,
     },
-    ...upcomingEvents().map((event) => {
+    ...upcomingEvents(today).map((event) => {
       const poster = posterFor(event.poster)
       const isQuiz = event.kind === 'quiz'
       const url = `${SITE}/#${eventAnchor(event.date)}`
@@ -156,7 +158,7 @@ export function StructuredData() {
                 price: event.price.replace(/[^\d.]/g, ''),
                 priceCurrency: 'GBP',
                 url,
-                availability: onSale(event)
+                availability: onSale(event, today)
                   ? 'https://schema.org/InStock'
                   : 'https://schema.org/PreOrder',
                 ...(event.tickets?.onSaleFrom ? { validFrom: event.tickets.onSaleFrom } : {}),

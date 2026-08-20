@@ -1,8 +1,11 @@
 import { club, clubPhoneHref } from '../data/club'
 import { Logo } from './Logo'
 import { MapPinIcon, PhoneIcon } from './Icons'
+import { useToday } from '../today'
 
 export function Footer() {
+  const year = useToday().getFullYear()
+
   return (
     <footer className="bg-club-green-dark text-club-cream/80 font-sans-ui">
       <div className="h-1 bg-gradient-to-r from-club-gold/0 via-club-gold to-club-gold/0" aria-hidden="true" />
@@ -36,7 +39,7 @@ export function Footer() {
         </div>
         <div className="mt-8 space-y-3 border-t border-white/10 pt-4 text-xs text-club-cream/60">
           <p>
-            &copy; {new Date().getFullYear()} {club.legalName}. Members only club. All are welcome to enquire about membership.
+            &copy; {year} {club.legalName}. Members only club. All are welcome to enquire about membership.
           </p>
           <p>
             This website is provided for general informational purposes only. Details are correct at the time of

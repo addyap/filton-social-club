@@ -6,6 +6,7 @@ import {
   type EntertainmentEvent,
 } from '../data/club'
 import { posterFor } from '../posters'
+import { useToday } from '../today'
 import { Photo } from './Photo'
 import { SectionHeading } from './SectionHeading'
 import { MusicNoteIcon, QuizIcon, TicketIcon } from './Icons'
@@ -48,7 +49,8 @@ const monthLabelFormatter = new Intl.DateTimeFormat('en-GB', { month: 'long', ye
  * its poster in the entertainment section.
  */
 export function EventsCalendar() {
-  const events = useMemo(() => upcomingEvents(), [])
+  const today = useToday()
+  const events = useMemo(() => upcomingEvents(today), [today])
 
   // Every distinct month that has an event, in order — these are the only
   // months worth paging through.

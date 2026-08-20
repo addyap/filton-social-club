@@ -1,10 +1,13 @@
 import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { hydrateRoot } from 'react-dom/client'
 import './index.css'
-import App from './App.tsx'
+import { Root } from './Root.tsx'
 
-createRoot(document.getElementById('root')!).render(
+// The page is prerendered, so hydrate the existing markup rather than throwing
+// it away and rendering from scratch.
+hydrateRoot(
+  document.getElementById('root')!,
   <StrictMode>
-    <App />
+    <Root />
   </StrictMode>,
 )
