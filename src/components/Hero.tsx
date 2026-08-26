@@ -88,13 +88,6 @@ export function Hero({ featured }: HeroProps) {
       />
       {/* Layer 1 — colour grade + vignette that turns daylight into night. */}
       <div className="hero__grade pointer-events-none absolute inset-0" aria-hidden="true" />
-      {/* Layer 1.5 — the club crest, pressed faintly into the room like an engraving. */}
-      <img
-        src={logoCrest}
-        alt=""
-        aria-hidden="true"
-        className="hero__crest pointer-events-none absolute left-1/2 top-1/2 h-[78%] w-auto max-w-none"
-      />
       {/* Layer 2 — the disco rig: light blades sweeping from where the real lamps hang. */}
       <div className="hero__beams pointer-events-none absolute inset-0" aria-hidden="true">
         <span className="hero__beam hero__beam--gold" />
@@ -112,6 +105,16 @@ export function Hero({ featured }: HeroProps) {
       <div className="hero__content relative mx-auto flex min-h-[46svh] max-w-6xl flex-col items-center justify-center gap-3 px-4 py-8 text-center sm:gap-4 sm:py-10">
         <span className="hero__kicker font-sans-ui text-[0.7rem] font-bold uppercase tracking-[0.32em] text-club-gold">
           Filton, Bristol · Members &amp; guests welcome
+        </span>
+
+        <span className="hero__crest-well inline-grid place-items-center rounded-full p-4 sm:p-5">
+          <img
+            src={logoCrest}
+            alt="Filton &amp; District Social Club crest"
+            className="hero__crest h-16 w-16 sm:h-20 sm:w-20"
+            width={512}
+            height={512}
+          />
         </span>
 
         <h1 className="hero__wordmark text-balance text-3xl font-bold leading-[1.05] drop-shadow-sm sm:text-5xl">
