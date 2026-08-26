@@ -79,7 +79,7 @@ body {
 
 /* Layer 0 — the room, pushed deep into shadow and cooled to night. */
 .hero__room {
-  filter: brightness(0.32) saturate(0.7) contrast(1.05);
+  filter: brightness(0.52) saturate(0.85) contrast(1.03);
   transform: scale(1.08) translate(calc(var(--px) * -14px), calc(var(--py) * -10px));
   opacity: calc(1 - var(--scroll) * 0.35);
 }
@@ -89,14 +89,14 @@ body {
   background:
     radial-gradient(120% 80% at 50% 118%, rgba(201, 162, 39, 0.28), transparent 60%),
     radial-gradient(90% 70% at 72% 8%, rgba(28, 51, 88, 0.55), transparent 65%),
-    linear-gradient(180deg, rgba(16, 29, 51, 0.72) 0%, rgba(16, 29, 51, 0.5) 45%, rgba(16, 29, 51, 0.9) 100%);
+    linear-gradient(180deg, rgba(16, 29, 51, 0.52) 0%, rgba(16, 29, 51, 0.32) 45%, rgba(16, 29, 51, 0.78) 100%);
 }
 /* Vignette, as its own overlay so it sits above the grade evenly. */
 .hero__grade::after {
   content: '';
   position: absolute;
   inset: 0;
-  box-shadow: inset 0 0 180px 40px rgba(9, 17, 31, 0.9);
+  box-shadow: inset 0 0 160px 30px rgba(9, 17, 31, 0.72);
 }
 
 /* Layer 2 — the disco rig. Blades fan out from the top-right, where the real
