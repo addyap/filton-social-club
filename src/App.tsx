@@ -1,7 +1,7 @@
 import { Analytics } from '@vercel/analytics/react'
 import { Header } from './components/Header'
 import { Footer } from './components/Footer'
-import { Logo } from './components/Logo'
+import { Hero } from './components/Hero'
 import { EventTicker } from './components/EventTicker'
 import { EventsCalendar } from './components/EventsCalendar'
 import { StructuredData } from './components/StructuredData'
@@ -152,45 +152,7 @@ function App() {
       <main id="main">
 
       {/* Hero */}
-      <section
-        className="relative overflow-hidden bg-club-green bg-cover bg-[position:20%_5%] text-club-cream"
-        style={{ backgroundImage: `url(${functionRoomStageWebp})` }}
-      >
-        <div className="absolute inset-0 bg-club-green-dark/80" aria-hidden="true" />
-        <div
-          className="pointer-events-none absolute -top-16 -left-16 h-56 w-56 rounded-full bg-club-gold/20 blur-3xl"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute -right-20 -bottom-24 h-72 w-72 rounded-full bg-club-gold/10 blur-3xl"
-          aria-hidden="true"
-        />
-        <div className="relative mx-auto flex max-w-6xl flex-col items-center gap-4 px-4 py-10 text-center sm:py-14">
-          <span className="rounded-full border border-club-gold/40 bg-club-gold/10 px-4 py-1 font-sans-ui text-xs font-bold uppercase tracking-[0.2em] text-club-gold">
-            Filton, Bristol
-          </span>
-          <Logo className="h-16 w-16 drop-shadow-lg" />
-          <h1 className="text-2xl font-bold drop-shadow-sm sm:text-4xl">{club.name}</h1>
-          <p className="max-w-2xl font-sans-ui text-sm text-club-cream/90 sm:text-base">
-            Bristol&rsquo;s friendly members&rsquo; club — live sport, Saturday night entertainment,
-            bingo, skittles and a warm welcome for members and their guests.
-          </p>
-          <div className="flex flex-wrap justify-center gap-3 font-sans-ui text-sm font-semibold">
-            <a
-              href="#membership"
-              className="rounded-full bg-club-gold px-6 py-3 text-club-green-dark shadow-lg shadow-club-gold/20 transition hover:-translate-y-0.5 hover:brightness-105 active:translate-y-0"
-            >
-              Become a Member
-            </a>
-            <a
-              href="#opening-hours"
-              className="rounded-full border border-club-cream/50 px-6 py-3 text-club-cream backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-white/10 active:translate-y-0"
-            >
-              Opening Hours
-            </a>
-          </div>
-        </div>
-      </section>
+      <Hero featured={featured} />
 
       {/* Entertainment — the club's headline draw, given the most visual weight on the page */}
       <section id="entertainment" className="relative overflow-hidden border-y-4 border-club-gold bg-club-green text-club-cream">
