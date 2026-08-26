@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { Logo } from './Logo'
+import logoCrest from '../assets/img/logo-512.webp'
 import functionRoomStageWebp from '../assets/img/function-room-stage.webp'
 import { club, formatShortDate, eventAnchor } from '../data/club'
 
@@ -88,6 +88,13 @@ export function Hero({ featured }: HeroProps) {
       />
       {/* Layer 1 — colour grade + vignette that turns daylight into night. */}
       <div className="hero__grade pointer-events-none absolute inset-0" aria-hidden="true" />
+      {/* Layer 1.5 — the club crest, pressed faintly into the room like an engraving. */}
+      <img
+        src={logoCrest}
+        alt=""
+        aria-hidden="true"
+        className="hero__crest pointer-events-none absolute left-1/2 top-1/2 h-[78%] w-auto max-w-none"
+      />
       {/* Layer 2 — the disco rig: light blades sweeping from where the real lamps hang. */}
       <div className="hero__beams pointer-events-none absolute inset-0" aria-hidden="true">
         <span className="hero__beam hero__beam--gold" />
@@ -106,8 +113,6 @@ export function Hero({ featured }: HeroProps) {
         <span className="hero__kicker font-sans-ui text-[0.7rem] font-bold uppercase tracking-[0.32em] text-club-gold">
           Filton, Bristol · Members &amp; guests welcome
         </span>
-
-        <Logo className="hero__crest h-14 w-14 sm:h-16 sm:w-16" />
 
         <h1 className="hero__wordmark text-balance text-3xl font-bold leading-[1.05] drop-shadow-sm sm:text-5xl">
           <span className="hero__line">Filton &amp; District</span>
