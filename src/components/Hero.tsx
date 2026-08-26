@@ -102,14 +102,14 @@ export function Hero({ featured }: HeroProps) {
       <div className="hero__spot pointer-events-none absolute inset-0" aria-hidden="true" />
 
       {/* Content */}
-      <div className="hero__content relative mx-auto flex min-h-[62svh] max-w-6xl flex-col items-center justify-center gap-4 px-4 py-12 text-center sm:py-14">
+      <div className="hero__content relative mx-auto flex min-h-[46svh] max-w-6xl flex-col items-center justify-center gap-3 px-4 py-8 text-center sm:gap-4 sm:py-10">
         <span className="hero__kicker font-sans-ui text-[0.7rem] font-bold uppercase tracking-[0.32em] text-club-gold">
           Filton, Bristol · Members &amp; guests welcome
         </span>
 
-        <Logo className="hero__crest h-16 w-16 sm:h-20 sm:w-20" />
+        <Logo className="hero__crest h-14 w-14 sm:h-16 sm:w-16" />
 
-        <h1 className="hero__wordmark text-balance text-4xl font-bold leading-[1.05] drop-shadow-sm sm:text-6xl">
+        <h1 className="hero__wordmark text-balance text-3xl font-bold leading-[1.05] drop-shadow-sm sm:text-5xl">
           <span className="hero__line">Filton &amp; District</span>
           <span className="hero__line hero__line--sign">Social Club</span>
         </h1>
