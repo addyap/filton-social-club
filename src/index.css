@@ -168,8 +168,8 @@ body {
    drop-shadows give it the relief of something pressed in. */
 .hero__crest {
   z-index: 0;
-  opacity: 0.2;
-  mix-blend-mode: soft-light;
+  opacity: 0.3;
+  mix-blend-mode: overlay;
   filter:
     drop-shadow(0 2px 1px rgba(0, 0, 0, 0.5))
     drop-shadow(0 -1px 1px rgba(255, 255, 255, 0.12));
@@ -254,7 +254,7 @@ body {
 }
 @keyframes hero-crest-in {
   from { opacity: 0; }
-  to   { opacity: 0.2; }
+  to   { opacity: 0.3; }
 }
 /* The sign stutters on like a real neon tube finding its charge. */
 @keyframes hero-sign-flicker {
