@@ -43,6 +43,7 @@ import {
   summerSkittles,
   summerSkittlesFixtures,
   bar,
+  tributes,
 } from './data/club'
 import { useToday } from './today'
 import functionRoomStage from './assets/img/function-room-stage.jpg'
@@ -61,6 +62,8 @@ import smallBarCorner from './assets/img/small-bar-corner.jpg'
 import smallBarCornerWebp from './assets/img/small-bar-corner.webp'
 import membershipCard from './assets/img/membership-card.jpg'
 import membershipCardWebp from './assets/img/membership-card.webp'
+import tributesPhoto from './assets/img/tributes.jpg'
+import tributesPhotoWebp from './assets/img/tributes.webp'
 import summerSkittlesSheet from './assets/img/summer-skittles-fixtures.jpg'
 import summerSkittlesSheetWebp from './assets/img/summer-skittles-fixtures.webp'
 import { posterFor, sizeOf } from './posters'
@@ -197,6 +200,8 @@ function App() {
                 <div className="flex items-center justify-center bg-gradient-to-br from-club-green to-club-green-dark p-10">
                   {featured.kind === 'quiz' ? (
                     <QuizIcon className="h-20 w-20 text-club-gold/50" />
+                  ) : featured.kind === 'bingo' ? (
+                    <BingoBallIcon className="h-20 w-20 text-club-gold/50" />
                   ) : (
                     <MusicNoteIcon className="h-20 w-20 text-club-gold/50" />
                   )}
@@ -238,6 +243,8 @@ function App() {
                       <div className="flex aspect-[3/4] items-center justify-center bg-gradient-to-br from-club-green to-club-green-dark">
                         {event.kind === 'quiz' ? (
                           <QuizIcon className="h-16 w-16 text-club-gold/50" />
+                        ) : event.kind === 'bingo' ? (
+                          <BingoBallIcon className="h-16 w-16 text-club-gold/50" />
                         ) : (
                           <MusicNoteIcon className="h-16 w-16 text-club-gold/50" />
                         )}
@@ -577,6 +584,34 @@ function App() {
           <p className="mx-auto mt-8 max-w-2xl text-center font-sans-ui text-xs text-gray-600">
             Committee members: {committee.members.join(', ')}.
           </p>
+        </div>
+      </section>
+
+      <SectionDivider />
+
+      {/* In Memory Of — quiet and still by design; no hover motion, no bright accents */}
+      <section className="mx-auto max-w-4xl px-4 py-16">
+        <SectionHeading eyebrow="Never forgotten" title="In Memory Of" subtitle={tributes.intro} />
+
+        <Photo
+          jpg={tributesPhoto}
+          webp={tributesPhotoWebp}
+          {...sizeOf('tributes')}
+          alt="Memorial plaques on the club's Any Thoughts Bench"
+          className="mx-auto mt-8 w-full max-w-lg rounded-lg shadow-sm"
+        />
+
+        <div className="mt-10 grid gap-5 font-sans-ui sm:grid-cols-2">
+          {tributes.people.map((person) => (
+            <div key={person.name} className="rounded-lg border border-club-green/10 bg-white p-5">
+              <p className="font-serif text-lg font-bold text-club-green">
+                {person.name}
+                {person.years && <span className="ml-2 text-sm font-normal text-club-gold">{person.years}</span>}
+              </p>
+              <p className="mt-0.5 text-xs font-semibold uppercase tracking-wide text-gray-500">{person.role}</p>
+              <p className="mt-2 text-sm italic leading-relaxed text-gray-600">{person.note}</p>
+            </div>
+          ))}
         </div>
       </section>
 

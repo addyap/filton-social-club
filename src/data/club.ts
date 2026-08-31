@@ -55,6 +55,44 @@ export const committee = {
   ],
 }
 
+// Transcribed from the plaques on the club's memorial bench — kept in the
+// order they appear on the bench. The bench itself (the "Any Thoughts
+// Bench") is dedicated to Brian Jarrett; that's folded into his entry below
+// rather than repeated.
+export const tributes = {
+  intro:
+    'The club’s memorial bench — the “Any Thoughts Bench” — carries these plaques in memory of members and officials we’ve lost.',
+  people: [
+    { name: 'Nick Hawkins', role: 'Club Treasurer', note: 'Much loved husband, dad & grandad. Forever in our thoughts.' },
+    {
+      name: 'Tim Richards',
+      years: '1952–2023',
+      role: 'Club Secretary',
+      note: 'Husband, dad, step-dad, Grampy, Silly Grampy and Step Grampy. Forever in our hearts. Missed by many.',
+    },
+    { name: 'Keith Jay', role: 'Club Secretary', note: 'Much loved husband, dad & grandad. Forever in our thoughts.' },
+    {
+      name: 'Brian Jarrett',
+      years: '1956–2012',
+      role: 'Loyal club member',
+      note: 'Much loved brother, always in our thoughts — love from sisters Marilyn and Diane. The bench itself is dedicated to Brian’s memory.',
+    },
+    { name: 'Janet Porter', role: 'Life-long member', note: 'Forever loved wife, mother & grandmother. Always in our thoughts.' },
+    {
+      name: 'Stephen Alexander Jones',
+      role: 'Loyal club member',
+      note: 'Much loved husband, dad and grandad. Forever in our thoughts.',
+    },
+    { name: 'John Organ', role: 'Longtime club member', note: 'Sport, jazz & real ale man. Missed by many.' },
+    {
+      name: 'Roland James Warry',
+      years: '1922–2022, aged 99',
+      role: 'Life-long member',
+      note: 'Loving husband & dad. Loved & missed always.',
+    },
+  ],
+}
+
 export const whatsOn = [
   {
     title: 'Live sport',
@@ -90,8 +128,8 @@ export type EntertainmentEvent = {
   blurb?: string
   /** Matches a `name` in scripts/process-performers.mjs. */
   poster?: string
-  /** Defaults to a live act; 'quiz' styles the card as a quiz night rather than a band. */
-  kind?: 'music' | 'quiz'
+  /** Defaults to a live act; 'quiz'/'bingo' style the card and its fallback icon accordingly. */
+  kind?: 'music' | 'quiz' | 'bingo'
   /** Extra facts shown as pills — used by the quiz for team size, prizes and the raffle. */
   details?: string[]
   /** Set only for advance-ticket shows — the regular Saturday nights are pay on the door. */
@@ -143,6 +181,14 @@ export const entertainmentCalendar = {
       act: 'Brendan & Kayleigh-Jo',
       blurb: 'Of 7th Stranger — rock, pop, rock ’n’ roll, reggae, country, ballads, duets and medleys',
       poster: 'brendan-kayleigh-jo',
+    },
+    {
+      date: '2026-09-17',
+      act: 'Musical Bingo with Stacey Charles',
+      kind: 'bingo',
+      time: '7.00pm',
+      blurb:
+        'Third time lucky! This is the new date after two postponements. Tickets bought for the original date are still valid — DM Stacey, ask at the club, or follow the instructions from wherever you bought yours if you can no longer make it.',
     },
     {
       date: '2026-09-19',
