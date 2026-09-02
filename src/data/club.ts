@@ -132,6 +132,8 @@ export type EntertainmentEvent = {
   kind?: 'music' | 'quiz' | 'bingo'
   /** Extra facts shown as pills — used by the quiz for team size, prizes and the raffle. */
   details?: string[]
+  /** Short corner-ribbon label that pulls a card out as urgent/not-to-miss. Keep it date-free — "This Friday!" reads wrong once the date it meant has passed or is more than a few days out. */
+  highlight?: string
   /** Set only for advance-ticket shows — the regular Saturday nights are pay on the door. */
   tickets?: {
     /** ISO date sales open. Omit once already on sale. */
@@ -175,6 +177,7 @@ export const entertainmentCalendar = {
       blurb: 'Finishes around 10.30pm. Open to members and non-members alike.',
       details: ['Teams of up to 5', 'Cash prize for the winners', 'Raffle on the night'],
       poster: 'quiz-night',
+      highlight: "Don't miss it!",
     },
     {
       date: '2026-09-12',

@@ -199,7 +199,11 @@ export function EventsCalendar() {
                                 key={event.date}
                                 href={`#${eventAnchor(event.date)}`}
                                 title={`${event.act} — ${formatEventDate(event.date)}`}
-                                className={`mt-1 block rounded border border-l-4 border-club-green/10 px-1.5 py-1 font-sans-ui text-[11px] leading-tight font-semibold shadow-sm transition ${style.block}`}
+                                className={`mt-1 block rounded border border-l-4 border-club-green/10 px-1.5 py-1 font-sans-ui text-[11px] leading-tight font-semibold shadow-sm transition ${
+                                  event.highlight
+                                    ? 'border-l-red-600 bg-red-600 text-white hover:bg-red-700'
+                                    : style.block
+                                }`}
                               >
                                 <span className="flex items-center gap-1">
                                   <style.Icon className="h-3 w-3 shrink-0" />
@@ -228,7 +232,11 @@ export function EventsCalendar() {
                 <a
                   key={event.date}
                   href={`#${eventAnchor(event.date)}`}
-                  className="flex gap-3 rounded-xl border border-club-green/10 bg-club-green/[0.03] p-3 transition hover:border-club-gold hover:bg-white hover:shadow-md"
+                  className={`flex gap-3 rounded-xl border p-3 transition hover:bg-white hover:shadow-md ${
+                    event.highlight
+                      ? 'border-red-400 bg-red-50 hover:border-red-500'
+                      : 'border-club-green/10 bg-club-green/[0.03] hover:border-club-gold'
+                  }`}
                 >
                   <time
                     dateTime={event.date}
@@ -253,6 +261,11 @@ export function EventsCalendar() {
                       <style.Icon className="h-3 w-3" />
                       {style.label}
                     </span>
+                    {event.highlight && (
+                      <span className="ml-1.5 inline-flex items-center rounded-full bg-red-600 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
+                        {event.highlight}
+                      </span>
+                    )}
                     <p className="mt-1 truncate font-bold text-club-green">{event.act}</p>
                     <p className="mt-0.5 text-xs text-gray-600">
                       {[event.time, event.price].filter(Boolean).join(' · ') || 'See poster for details'}

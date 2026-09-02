@@ -181,10 +181,16 @@ function App() {
           {featured && (
             <article
               id={eventAnchor(featured.date)}
-              className="relative mx-auto mt-12 grid max-w-4xl scroll-mt-32 gap-0 overflow-hidden rounded-2xl bg-club-cream shadow-2xl shadow-black/30 ring-2 ring-club-gold sm:grid-cols-2"
+              className={`relative mx-auto mt-12 grid max-w-4xl scroll-mt-32 gap-0 overflow-hidden rounded-2xl bg-club-cream shadow-2xl shadow-black/30 sm:grid-cols-2 ${
+                featured.highlight ? 'ring-2 ring-red-500' : 'ring-2 ring-club-gold'
+              }`}
             >
-              <span className="absolute left-4 top-4 z-10 rounded-full bg-club-gold px-3 py-1 font-sans-ui text-xs font-bold uppercase tracking-wide text-club-green-dark shadow">
-                Next up
+              <span
+                className={`absolute left-4 top-4 z-10 rounded-full px-3 py-1 font-sans-ui text-xs font-bold uppercase tracking-wide shadow ${
+                  featured.highlight ? 'bg-red-600 text-white' : 'bg-club-gold text-club-green-dark'
+                }`}
+              >
+                {featured.highlight ?? 'Next up'}
               </span>
               {featuredPoster ? (
                 <Photo
@@ -228,8 +234,17 @@ function App() {
                   <article
                     key={event.date}
                     id={eventAnchor(event.date)}
-                    className="flex scroll-mt-32 flex-col overflow-hidden rounded-xl bg-club-cream shadow-md ring-1 ring-club-gold/20 transition hover:-translate-y-1 hover:shadow-xl target:ring-2 target:ring-club-gold"
+                    className={`relative flex scroll-mt-32 flex-col overflow-hidden rounded-xl bg-club-cream shadow-md transition hover:-translate-y-1 hover:shadow-xl target:ring-2 target:ring-club-gold ${
+                      event.highlight
+                        ? 'ring-2 ring-red-500 shadow-lg shadow-red-500/20'
+                        : 'ring-1 ring-club-gold/20'
+                    }`}
                   >
+                    {event.highlight && (
+                      <span className="absolute left-4 top-4 z-10 rounded-full bg-red-600 px-3 py-1 font-sans-ui text-xs font-bold uppercase tracking-wide text-white shadow">
+                        {event.highlight}
+                      </span>
+                    )}
                     {poster ? (
                       <Photo
                         jpg={poster.jpg}
