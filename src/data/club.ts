@@ -229,7 +229,6 @@ export const entertainmentCalendar = {
       date: '2026-10-31',
       act: 'Stacey Charles',
       time: '8.45pm',
-      price: '£5',
       blurb:
         'A Halloween fancy-dress party — songs from The Killers, Michael Jackson, Rihanna, Nina Simone and more. Dress to impress and win a prize.',
       poster: 'halloween-party',
