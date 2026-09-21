@@ -30,6 +30,7 @@ const jobs = [
   { src: `${DL}/Dean Oliver.jpg`, name: 'dean-oliver' },
   { src: `${DL}/Beth Amis.jpg`, name: 'beth-amis' },
   { src: `${DL}/AGAIN.jpg`, name: 'lucciano-frankie' },
+  { src: '/Users/antonyaddy/Desktop/Halloween.jpg', name: 'halloween-party' },
   { src: `${DL}/FILTON MORE MORE MORE.jpg`, name: 'abbaholics' },
   { src: `${DL}/FILTON MORE.jpg`, name: 'top-of-the-pops-xmas' },
 

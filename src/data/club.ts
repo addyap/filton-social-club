@@ -142,6 +142,8 @@ export type EntertainmentEvent = {
     availability?: string
     /** Styles the badge with more urgency, e.g. for low stock. */
     urgent?: boolean
+    /** Sold out — overrides availability with a plain "Sold out" badge. */
+    soldOut?: boolean
   }
 }
 
@@ -212,7 +214,8 @@ export const entertainmentCalendar = {
       act: 'The New Jersey Boys',
       blurb: 'The music of Frankie Valli and The Four Seasons, plus Showaddywaddy and other legends',
       poster: 'new-jersey-boys',
-      tickets: { availability: 'Less than 40 left', urgent: true },
+      highlight: 'Sold out',
+      tickets: { soldOut: true },
     },
     {
       date: '2026-10-17',
@@ -221,6 +224,16 @@ export const entertainmentCalendar = {
       blurb: 'As seen on Britain’s Got Talent — one night only',
       poster: 'lucciano-frankie',
       tickets: { availability: 'Plenty available' },
+    },
+    {
+      date: '2026-10-31',
+      act: 'Stacey Charles',
+      time: '8.45pm',
+      price: '£5',
+      blurb:
+        'A Halloween fancy-dress party — songs from The Killers, Michael Jackson, Rihanna, Nina Simone and more. Dress to impress and win a prize.',
+      poster: 'halloween-party',
+      highlight: 'Halloween',
     },
     {
       date: '2026-11-07',
@@ -285,6 +298,9 @@ export function formatShortDate(iso: string) {
 export function ticketStatus(event: EntertainmentEvent, now = new Date()) {
   const tickets = event.tickets
   if (!tickets) return null
+  if (tickets.soldOut) {
+    return { onSale: false as const, urgent: true, text: 'Sold out' }
+  }
   const today = now.toISOString().slice(0, 10)
   if (tickets.onSaleFrom && tickets.onSaleFrom > today) {
     return { onSale: false as const, urgent: false, text: `Tickets on sale ${formatShortDate(tickets.onSaleFrom)}` }
