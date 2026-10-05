@@ -3,6 +3,7 @@ import { Header } from './components/Header'
 import { Footer } from './components/Footer'
 import { Hero } from './components/Hero'
 import { EventTicker } from './components/EventTicker'
+import { NewEventsStrip } from './components/NewEventsStrip'
 import { EventsCalendar } from './components/EventsCalendar'
 import { StructuredData } from './components/StructuredData'
 import { SectionHeading } from './components/SectionHeading'
@@ -156,6 +157,9 @@ function App() {
 
       {/* Hero */}
       <Hero featured={featured} />
+
+      {/* Just-added events — hides itself when nothing's new */}
+      <NewEventsStrip />
 
       {/* Entertainment — the club's headline draw, given the most visual weight on the page */}
       <section id="entertainment" className="relative overflow-hidden border-y-4 border-club-gold bg-club-green text-club-cream">

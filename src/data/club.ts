@@ -134,6 +134,10 @@ export type EntertainmentEvent = {
   details?: string[]
   /** Short corner-ribbon label that pulls a card out as urgent/not-to-miss. Keep it date-free — "This Friday!" reads wrong once the date it meant has passed or is more than a few days out. */
   highlight?: string
+  /** ISO date this event was added to the site. Set to the day you add it and
+   *  it shows in the "Just added" strip below the hero for 7 days, then drops
+   *  off on its own. Leave unset for events that aren't newly announced. */
+  addedOn?: string
   /** Set only for advance-ticket shows — the regular Saturday nights are pay on the door. */
   tickets?: {
     /** ISO date sales open. Omit once already on sale. */
@@ -242,6 +246,7 @@ export const entertainmentCalendar = {
         'A spooky afternoon for the kids with entertainer Johnny — disco, games and fancy dress. Come in your best Halloween costume!',
       poster: 'childrens-halloween-party',
       highlight: 'For the kids',
+      addedOn: '2026-10-05',
     },
     {
       date: '2026-11-07',
@@ -326,6 +331,24 @@ export function upcomingEvents(now = new Date()): EntertainmentEvent[] {
   const sorted = [...entertainmentCalendar.events].sort((a, b) => a.date.localeCompare(b.date))
   const upcoming = sorted.filter((e) => e.date >= today)
   return upcoming.length > 0 ? upcoming : sorted
+}
+
+/** How long a newly added event stays in the "Just added" strip. */
+export const NEW_EVENT_WINDOW_DAYS = 7
+
+/**
+ * Events added within the last {@link NEW_EVENT_WINDOW_DAYS} days that haven't
+ * happened yet, soonest event first. Drives the "Just added" strip, which
+ * hides itself once this is empty.
+ */
+export function recentlyAddedEvents(now = new Date()): EntertainmentEvent[] {
+  const today = now.toISOString().slice(0, 10)
+  const cutoff = new Date(now.getTime() - NEW_EVENT_WINDOW_DAYS * 24 * 60 * 60 * 1000)
+    .toISOString()
+    .slice(0, 10)
+  return entertainmentCalendar.events
+    .filter((e) => e.addedOn && e.addedOn >= cutoff && e.addedOn <= today && e.date >= today)
+    .sort((a, b) => a.date.localeCompare(b.date))
 }
 
 /** Anchor id for an event's card, so the ticker can jump straight to its poster. */
