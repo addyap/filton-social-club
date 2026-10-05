@@ -41,8 +41,6 @@ import {
   ticketStatus,
   type EntertainmentEvent,
   skittles,
-  summerSkittles,
-  summerSkittlesFixtures,
   bar,
   tributes,
 } from './data/club'
@@ -65,8 +63,6 @@ import membershipCard from './assets/img/membership-card.jpg'
 import membershipCardWebp from './assets/img/membership-card.webp'
 import tributesPhoto from './assets/img/tributes.jpg'
 import tributesPhotoWebp from './assets/img/tributes.webp'
-import summerSkittlesSheet from './assets/img/summer-skittles-fixtures.jpg'
-import summerSkittlesSheetWebp from './assets/img/summer-skittles-fixtures.webp'
 import { posterFor, sizeOf } from './posters'
 
 // `name` matches the filename stem in src/assets/img/dimensions.json.
@@ -332,13 +328,13 @@ function App() {
           </div>
           <div className="mt-4">
             <SectionHeading
-              eyebrow="Two competitions"
+              eyebrow="Club team"
               title="Skittles"
-              subtitle="A friendly winter league through the club season, plus our own summer league on the alley."
+              subtitle="A friendly team in the winter skittles league — new players always welcome."
             />
           </div>
 
-          <div className="mt-10 grid gap-6 sm:grid-cols-2">
+          <div className="mt-10">
             <div className="rounded-xl border border-club-green/10 border-l-4 border-l-club-gold bg-white p-6 shadow-sm">
               <h3 className="text-lg font-bold text-club-green">Winter league</h3>
               <p className="mt-2 font-sans-ui text-sm leading-relaxed text-gray-700">
@@ -350,82 +346,7 @@ function App() {
                 .
               </p>
             </div>
-            <div className="rounded-xl border border-club-green/10 border-l-4 border-l-club-gold bg-white p-6 shadow-sm">
-              <h3 className="text-lg font-bold text-club-green">{summerSkittles.name}</h3>
-              <p className="mt-2 font-sans-ui text-sm leading-relaxed text-gray-700">
-                {summerSkittles.season} &middot; {summerSkittles.weeks} weeks. {summerSkittles.format}, plus three
-                cup competitions: {summerSkittles.cups.join(', ')}.
-              </p>
-            </div>
           </div>
-
-          <div className="mt-10 overflow-x-auto rounded-xl border border-club-green/10 bg-white shadow-sm">
-            <table className="w-full min-w-[640px] border-collapse font-sans-ui text-sm">
-              <thead>
-                <tr className="border-b border-club-green/10 bg-club-green/[0.04] text-left text-xs font-bold uppercase tracking-wide text-club-green">
-                  <th className="px-4 py-3">Week</th>
-                  <th className="px-4 py-3">Tuesday</th>
-                  <th className="px-4 py-3">Wednesday</th>
-                  <th className="px-4 py-3">Thursday</th>
-                  <th className="px-4 py-3">Friday</th>
-                </tr>
-              </thead>
-              <tbody>
-                {summerSkittlesFixtures.map((week) => (
-                  <tr key={week.week} className="border-b border-club-green/10 last:border-0 align-top">
-                    <td className="px-4 py-3 font-semibold text-club-green">
-                      {week.week}
-                      <div className="font-normal text-gray-500">{formatEventDate(week.starting)}</div>
-                    </td>
-                    {week.note ? (
-                      <td colSpan={4} className="px-4 py-3 italic text-gray-600">
-                        {week.note}
-                      </td>
-                    ) : (
-                      <>
-                        {(['tuesday', 'wednesday', 'thursday'] as const).map((day) => (
-                          <td key={day} className="px-4 py-3 text-gray-700">
-                            {week[day].length > 0
-                              ? week[day].map((m) => (
-                                  <div key={m.pair}>
-                                    {m.pair} <span className="text-gray-400">&middot; {m.time}</span>
-                                  </div>
-                                ))
-                              : '—'}
-                          </td>
-                        ))}
-                        <td className="px-4 py-3 text-gray-700">
-                          {week.friday?.length ? week.friday.map((m) => <div key={m.pair}>{m.pair}</div>) : '—'}
-                        </td>
-                      </>
-                    )}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <p className="mt-3 font-sans-ui text-xs text-gray-500">
-            Team numbers only — see the noticeboard&rsquo;s separate team sheet for names. All games played on
-            Alley 2.
-          </p>
-
-          <details className="mt-6 group">
-            <summary className="cursor-pointer font-sans-ui text-sm font-semibold text-club-green underline underline-offset-2">
-              View the original fixture sheet
-            </summary>
-            <picture>
-              <source srcSet={summerSkittlesSheetWebp} type="image/webp" />
-              <img
-                src={summerSkittlesSheet}
-                alt="Filton and District Summer Skittle League 2026 fixture list"
-                width={1400}
-                height={2276}
-                loading="lazy"
-                decoding="async"
-                className="mt-4 w-full max-w-md rounded-lg border border-club-green/10"
-              />
-            </picture>
-          </details>
         </div>
       </section>
 

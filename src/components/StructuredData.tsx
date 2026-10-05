@@ -132,6 +132,7 @@ export function StructuredData() {
     ...upcomingEvents(today).map((event) => {
       const poster = posterFor(event.poster)
       const isQuiz = event.kind === 'quiz'
+      const isKids = event.kind === 'kids'
       const url = `${SITE}/#${eventAnchor(event.date)}`
 
       return {
@@ -144,7 +145,11 @@ export function StructuredData() {
         eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
         description:
           event.blurb ??
-          (isQuiz ? `Quiz night at ${club.name}.` : `Live entertainment from ${event.act} at ${club.name}.`),
+          (isQuiz
+            ? `Quiz night at ${club.name}.`
+            : isKids
+              ? `A children’s party at ${club.name}.`
+              : `Live entertainment from ${event.act} at ${club.name}.`),
         location: venue,
         organizer: { '@type': 'Organization', name: club.name, url: SITE },
         // The poster is what Google shows alongside an event rich result.

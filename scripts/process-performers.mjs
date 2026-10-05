@@ -62,15 +62,6 @@ const jobs = [
     crop: { left: 212, top: 1128, width: 620, height: 775 },
   },
   { src: `${DL}/New Year FDSC.jpg`, name: 'new-years-eve' },
-
-  // Not an act poster — the summer skittle league fixture sheet, cropped in
-  // from the surrounding desk so the laminated sheet fills the frame.
-  {
-    src: `${DL}/Summer Skittles.jpg`,
-    name: 'summer-skittles-fixtures',
-    crop: { left: 20, top: 100, width: 1825, height: 3000 },
-    dir: 'img',
-  },
 ]
 
 for (const job of jobs) {

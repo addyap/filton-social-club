@@ -5,7 +5,7 @@ import { club, formatShortDate, eventAnchor } from '../data/club'
 
 type HeroProps = {
   /** The next act on the calendar, surfaced as the hero's living proof. */
-  featured?: { date: string; act: string; kind?: 'music' | 'quiz' | 'bingo' }
+  featured?: { date: string; act: string; kind?: 'music' | 'quiz' | 'bingo' | 'kids' }
 }
 
 /**
@@ -72,7 +72,13 @@ export function Hero({ featured }: HeroProps) {
 
   const tonight = featured
     ? `${
-        featured.kind === 'quiz' ? 'Next quiz' : featured.kind === 'bingo' ? 'Next bingo night' : 'Live this Saturday'
+        featured.kind === 'quiz'
+          ? 'Next quiz'
+          : featured.kind === 'bingo'
+            ? 'Next bingo night'
+            : featured.kind === 'kids'
+              ? 'Next kids’ party'
+              : 'Live this Saturday'
       } · ${featured.act}`
     : 'Live music every Saturday night'
 
