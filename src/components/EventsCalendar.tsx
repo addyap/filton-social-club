@@ -9,7 +9,7 @@ import { posterFor } from '../posters'
 import { useToday } from '../today'
 import { Photo } from './Photo'
 import { SectionHeading } from './SectionHeading'
-import { MusicNoteIcon, QuizIcon, TicketIcon, BingoBallIcon } from './Icons'
+import { MusicNoteIcon, QuizIcon, TicketIcon, BingoBallIcon, StarIcon } from './Icons'
 
 const weekdayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
@@ -31,6 +31,12 @@ const kindStyles = {
     Icon: BingoBallIcon,
     dot: 'bg-gray-500',
     block: 'border-l-gray-400 bg-gray-100 text-gray-700 hover:bg-gray-500 hover:text-white',
+  },
+  kids: {
+    label: 'Kids’ party',
+    Icon: StarIcon,
+    dot: 'bg-purple-500',
+    block: 'border-l-purple-400 bg-purple-500/10 text-purple-700 hover:bg-purple-500 hover:text-white',
   },
 } as const
 
@@ -255,7 +261,9 @@ export function EventsCalendar() {
                           ? 'bg-club-gold/20 text-club-green-dark'
                           : event.kind === 'bingo'
                             ? 'bg-gray-200 text-gray-700'
-                            : 'bg-club-green/10 text-club-green'
+                            : event.kind === 'kids'
+                              ? 'bg-purple-100 text-purple-700'
+                              : 'bg-club-green/10 text-club-green'
                       }`}
                     >
                       <style.Icon className="h-3 w-3" />

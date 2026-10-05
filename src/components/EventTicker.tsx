@@ -5,7 +5,7 @@ import {
   formatEventDate,
   type EntertainmentEvent,
 } from '../data/club'
-import { MusicNoteIcon, QuizIcon } from './Icons'
+import { MusicNoteIcon, QuizIcon, StarIcon } from './Icons'
 
 /** One month's worth of events, led by a dark month chip. */
 function MonthRun({ month, events }: { month: string; events: EntertainmentEvent[] }) {
@@ -15,20 +15,27 @@ function MonthRun({ month, events }: { month: string; events: EntertainmentEvent
         {month}
       </span>
       {events.map((event) => {
-        const Icon = event.kind === 'quiz' ? QuizIcon : MusicNoteIcon
+        const isKids = event.kind === 'kids'
+        const Icon = event.kind === 'quiz' ? QuizIcon : isKids ? StarIcon : MusicNoteIcon
+        // Kids' events ride through as a filled badge so they stand out from the
+        // Saturday-night run; the rest are plain links that fill in on hover.
+        const className = isKids
+          ? 'mr-3 flex shrink-0 items-center gap-2 rounded-full bg-club-green-dark px-3 py-1.5 font-semibold text-club-gold transition hover:bg-club-green focus-visible:outline-none'
+          : 'mr-3 flex shrink-0 items-center gap-2 rounded-full px-3 py-1.5 text-club-green-dark transition hover:bg-club-green-dark hover:text-club-gold focus-visible:bg-club-green-dark focus-visible:text-club-gold focus-visible:outline-none'
         return (
           <a
             key={event.date}
             href={`#${eventAnchor(event.date)}`}
             title={`${event.act} — ${formatEventDate(event.date)}`}
-            className="mr-3 flex shrink-0 items-center gap-2 rounded-full px-3 py-1.5 text-club-green-dark transition hover:bg-club-green-dark hover:text-club-gold focus-visible:bg-club-green-dark focus-visible:text-club-gold focus-visible:outline-none"
+            className={className}
           >
-            <Icon className="h-4 w-4 shrink-0 opacity-70" />
+            <Icon className={`h-4 w-4 shrink-0 ${isKids ? '' : 'opacity-70'}`} />
             <span className="font-bold tabular-nums">{formatEventDay(event.date)}</span>
             <span className="opacity-40" aria-hidden="true">
               ·
             </span>
             <span>{event.act}</span>
+            {isKids && <span className="ml-1 text-[10px] font-bold uppercase tracking-wider opacity-90">Kids</span>}
           </a>
         )
       })}
