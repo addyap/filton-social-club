@@ -235,6 +235,15 @@ export const entertainmentCalendar = {
       highlight: 'Halloween',
     },
     {
+      date: '2026-11-01',
+      act: 'Children’s Halloween Party',
+      time: '2.30pm – 4.30pm',
+      blurb:
+        'A spooky afternoon for the kids with entertainer Johnny — disco, games and fancy dress. Come in your best Halloween costume!',
+      poster: 'childrens-halloween-party',
+      highlight: 'For the kids',
+    },
+    {
       date: '2026-11-07',
       act: 'Abbaholics',
       blurb: 'The ultimate ABBA tribute, with Disco Dollz',

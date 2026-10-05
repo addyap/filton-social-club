@@ -31,8 +31,11 @@ const jobs = [
   { src: `${DL}/Beth Amis.jpg`, name: 'beth-amis' },
   { src: `${DL}/AGAIN.jpg`, name: 'lucciano-frankie' },
   { src: '/Users/antonyaddy/Desktop/Halloween.jpg', name: 'halloween-party' },
+  // Johnny's kids' Halloween party (Sun 1 Nov) — set src to the poster you sent.
+  { src: `${DL}/Childrens Halloween Party.jpg`, name: 'childrens-halloween-party' },
   { src: `${DL}/FILTON MORE MORE MORE.jpg`, name: 'abbaholics' },
-  { src: `${DL}/FILTON MORE.jpg`, name: 'top-of-the-pops-xmas' },
+  // New poster supplied Oct 2026 — point src at the updated Top of the Pops image.
+  { src: `${DL}/Top of the Pops Xmas.jpg`, name: 'top-of-the-pops-xmas' },
 
   // The New Jersey Boys arrived tilted inside a collage — straighten, then crop.
   {
