@@ -1,8 +1,9 @@
+import { useEffect, useRef, useState } from 'react'
 import { eventAnchor, formatShortDate, recentlyAddedEvents, type EntertainmentEvent } from '../data/club'
 import { useToday } from '../today'
 import { StarIcon } from './Icons'
 
-/** One scrolling run of the just-added events — duplicated for a seamless loop. */
+/** One run of the just-added events. */
 function AddedRun({ events }: { events: EntertainmentEvent[] }) {
   return (
     <div className="flex w-max items-center">
@@ -25,13 +26,33 @@ function AddedRun({ events }: { events: EntertainmentEvent[] }) {
 
 /**
  * Slim band under the hero listing events added to the site in the last few
- * days, scrolling past like the entertainment ticker and each linking down to
- * its poster. Driven by {@link recentlyAddedEvents}, so an entry appears the day
- * an event is added and drops off 7 days later — and the whole strip hides
- * itself once nothing is new.
+ * days, each linking down to its poster. Driven by {@link recentlyAddedEvents},
+ * so an entry appears the day an event is added and drops off 7 days later —
+ * and the whole strip hides itself once nothing is new.
+ *
+ * It only turns into a scrolling marquee (like the entertainment ticker) once
+ * there are enough events to overflow the row; a short list just sits still, so
+ * the duplicate copy the loop needs never shows up as a phantom repeat.
  */
 export function NewEventsStrip() {
   const events = recentlyAddedEvents(useToday())
+  const viewportRef = useRef<HTMLDivElement>(null)
+  const runRef = useRef<HTMLDivElement>(null)
+  const [scroll, setScroll] = useState(false)
+
+  useEffect(() => {
+    const measure = () => {
+      const viewport = viewportRef.current
+      const run = runRef.current
+      if (!viewport || !run) return
+      // A few px of slack so a row that only just fits doesn't jitter into scrolling.
+      setScroll(run.scrollWidth > viewport.clientWidth + 8)
+    }
+    measure()
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [events])
+
   if (events.length === 0) return null
 
   // Roughly constant reading speed regardless of how many were just added.
@@ -48,24 +69,28 @@ export function NewEventsStrip() {
         Just added
       </h2>
 
-      <div className="ticker-viewport relative flex-1 overflow-hidden">
+      <div ref={viewportRef} className="ticker-viewport relative flex-1 overflow-hidden">
         <div
-          className="ticker-track flex w-max py-2"
-          style={{ '--ticker-duration': duration } as React.CSSProperties}
+          className={`flex w-max py-2 ${scroll ? 'ticker-track' : ''}`}
+          style={scroll ? ({ '--ticker-duration': duration } as React.CSSProperties) : undefined}
         >
-          <div className="ml-4 flex w-max items-center sm:ml-6">
+          <div ref={runRef} className="ml-4 flex w-max items-center sm:ml-6">
             <AddedRun events={events} />
           </div>
-          {/* Second copy makes the wrap seamless; hidden from screen readers. */}
-          <div aria-hidden="true" className="ml-4 flex w-max items-center sm:ml-6">
-            <AddedRun events={events} />
-          </div>
+          {/* Second copy makes the wrap seamless — only rendered when we actually scroll. */}
+          {scroll && (
+            <div aria-hidden="true" className="ml-4 flex w-max items-center sm:ml-6">
+              <AddedRun events={events} />
+            </div>
+          )}
         </div>
         {/* Soft fade at the trailing edge, so events slide out rather than snap. */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-club-green-dark to-transparent"
-        />
+        {scroll && (
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-club-green-dark to-transparent"
+          />
+        )}
       </div>
     </section>
   )
